@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>noaharnavrobert.unossm/noaharnavrobert.unossm.HelloApplication</mainClass>
+                            <mainClass>noaharnavrobert.unossm/noaharnavrobert.unossm.Application</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
