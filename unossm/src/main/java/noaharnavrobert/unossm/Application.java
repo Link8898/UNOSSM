@@ -14,8 +14,6 @@ public class Application extends javafx.application.Application {
         stage.setTitle("UNOSSM");
         stage.setScene(scene);
         stage.show();
-
-        Logic logic = new Logic(2); // Temporary placement for the initialization of the logic
     }
 
     public static void main(String[] args) {
