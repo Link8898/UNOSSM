@@ -40,6 +40,7 @@ public class Logic {
         String card = hands.get(id).get(cardIndex);
         if (id == turn && (card.charAt(0) == currentCard.charAt(0) || card.charAt(1) == currentCard.charAt(1) || currentCard.equals("NONE"))) {
             currentCard = card;
+            hands.get(id).remove(cardIndex);
             turn += 1;
             if (turn >= hands.size()) {
                 turn = 0;
@@ -50,7 +51,7 @@ public class Logic {
         }
     }
 
-    public ArrayList GetHand(int id) { // Get the hand corresponding to the id
+    public ArrayList<String> GetHand(int id) { // Get the hand corresponding to the id
         return hands.get(id);
     }
 }
