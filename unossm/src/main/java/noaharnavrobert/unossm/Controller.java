@@ -76,6 +76,6 @@ public class Controller {
     }
 
     public void initialize() {
-        //RenderHand();
+        // RenderHand();
     }
 }
