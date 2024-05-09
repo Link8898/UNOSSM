@@ -15,7 +15,7 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <children>
-      <Label text="UnoSSM">
+      <Label text="UNOSSM">
          <font>
             <Font size="36.0" />
          </font>
@@ -31,7 +31,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="join" layoutX="94.0" layoutY="131.0" mnemonicParsing="false" onAction="#onJ" text="Join" />
+                  <Button fx:id="join" layoutX="94.0" layoutY="131.0" mnemonicParsing="false" onAction="#onJoinGame" text="Join" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
