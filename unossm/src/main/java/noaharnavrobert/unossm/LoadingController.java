@@ -54,7 +54,6 @@ public class LoadingController {
         }
     }
 
-    //test
 
 
     @FXML
