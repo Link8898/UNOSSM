@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c9d6178-5c00-486b-bb62-f75e483258ea" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/unossm/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/src/main/java/noaharnavrobert/unossm/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/src/main/java/noaharnavrobert/unossm/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/src/main/java/noaharnavrobert/unossm/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/src/main/java/noaharnavrobert/unossm/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unossm/src/main/resources/noaharnavrobert/unossm/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/unossm/src/main/resources/noaharnavrobert/unossm/hello-view.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="7c9d6178-5c00-486b-bb62-f75e483258ea" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,10 +13,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2fVtpebxkVZWhuIv1QPSCcONMI0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -35,12 +24,18 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Application.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/nrock/Documents/Object Oriented/UNOSSM"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/noaharnavrobert/unossm" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

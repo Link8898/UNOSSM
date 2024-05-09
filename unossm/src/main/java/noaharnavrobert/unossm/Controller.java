@@ -15,9 +15,19 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 
+import java.net.InetAddress;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class Controller {
+
+
+   public void initialize(URL location, ResourceBundle resources) {
+       getLocalIP();
+    }
+
     Logic logic = new Logic(1); // Temporary placement for the initialization of the logic
 
     // Identity
@@ -27,6 +37,10 @@ public class Controller {
     private ArrayList<String> hand;
     @FXML
     private AnchorPane container;
+    @FXML
+    private Label ipbox;
+    @FXML
+    private Button startgame;
     private ArrayList<Button> cards = new ArrayList<Button>();
 
     // Styling
@@ -35,6 +49,21 @@ public class Controller {
     @FXML
     protected void onHelloButtonClick() {
         RenderHand();
+    }
+
+    @FXML
+    protected void getLocalIP() {
+        System.out.println("Running");
+        try {
+            InetAddress localhost = InetAddress.getLocalHost();
+            String ip = localhost.getHostAddress();
+            ipbox.setText(ip);
+            ipbox.setTextFill(Color.GREEN);
+        } catch (UnknownHostException ex) {
+            ipbox.setText("UNKNOWN");
+            ipbox.setTextFill(Color.RED);
+            startgame.setCancelButton(true);
+        }
     }
 
     private void RenderHand() { // Now fix positioning of the cards (space out based on cards.length or something)
