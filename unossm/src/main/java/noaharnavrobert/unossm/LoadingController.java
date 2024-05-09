@@ -54,6 +54,8 @@ public class LoadingController {
         }
     }
 
+    //test
+
 
     @FXML
     protected void onCreateGame(){
