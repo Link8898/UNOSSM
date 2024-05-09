@@ -27,7 +27,7 @@ public class LoadingController {
     // button to join a specific ip's game
     @FXML
     private Button join;
-    // textfield where you enter someones local ip address
+    // textfield where you enter someone's local ip address
     @FXML
     private TextField inputbox;
 
