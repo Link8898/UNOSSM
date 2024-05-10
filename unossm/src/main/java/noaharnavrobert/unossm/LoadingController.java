@@ -9,7 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
 import java.util.ArrayList;
@@ -61,7 +63,33 @@ public class LoadingController {
 
     @FXML
     protected void onCreateGame(){
+        int portNumber = 12345;
 
+        try {
+            // Create a server socket
+
+
+            ServerSocket serverSocket = new ServerSocket(portNumber);
+
+            // Accept a connection from the client
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Server is running!");
+
+            // Create input stream to receive data from client
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+            // Read data from client
+            String clientData = in.readLine();
+            System.out.println("Received from client: " + clientData);
+
+            // Close resources
+
+            in.close();
+            clientSocket.close();
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -71,7 +99,7 @@ public class LoadingController {
         String serverAddress = inputbox.getText();
 
 
-int portNumber = 12345;
+        int portNumber = 12345;
 
         try {
             // Create a socket to connect to the server
@@ -82,6 +110,7 @@ int portNumber = 12345;
 
             // Send data to server
             out.println("Hello from client!");
+            System.out.println("Client has sent data!");
 
             // Close resources
             out.close();
