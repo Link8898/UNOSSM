@@ -1,57 +1,52 @@
 package noaharnavrobert.unossm;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.ArrayList;
 
-public class Server {
-    private ArrayList<ArrayList<String>> hands; // The hands of each player
-    private static final String[] colors = {"r", "g", "b", "y"};
-    private String currentCard = "NONE"; // Top facing card
-    private int turn = 0; // Which player's turn
-    public Server(int playerCount) {
-        hands = new ArrayList<>(playerCount);
+public class Server extends Thread {
 
-        // Initialize player hands
-        for (int index = 0; index < playerCount; index++) {
-            hands.add(new ArrayList());
-            for (int count = 0; count < 7; count++) {
-                int randomNumber = (int)(Math.random( ) * (9 - 1) + 1);
-                String randomColor = colors[(int)(Math.random( ) * colors.length)];
-                hands.get(index).add(randomColor + randomNumber);
+    // server variables
+    private DatagramSocket socket;
+    private boolean running;
+    private byte[] buf = new byte[256];
+
+    public Server() throws SocketException {
+        socket = new DatagramSocket(1234);
+    }
+    public void run() {
+        running = true;
+
+        while (running) {
+            DatagramPacket packet
+              = new DatagramPacket(buf, buf.length);
+            try {
+                socket.receive(packet);
+            } catch (IOException e) {
+                System.out.println(e);
+                throw new RuntimeException(e);
+            }
+
+            InetAddress address = packet.getAddress();
+            int port = packet.getPort();
+            packet = new DatagramPacket(buf, buf.length, address, port);
+            String received
+              = new String(packet.getData(), 0, packet.getLength());
+
+            if (received.equals("end")) {
+                running = false;
+                continue;
+            }
+            try {
+                socket.send(packet);
+            } catch (IOException e) {
+                System.out.println(e);
+                throw new RuntimeException(e);
             }
         }
-    }
-
-    public void DrawCard(int id) { // Give a random card to the user via their id
-        if (id == turn) {
-            int randomNumber = (int)(Math.random( ) * (9 - 1) + 1);
-            String randomColor = colors[(int)(Math.random( ) * colors.length)];
-            hands.get(id).add(randomColor + randomNumber);
-            turn += 1;
-            if (turn >= hands.size()) {
-                turn = 0;
-            }
-        }
-        else {
-            System.out.println("Not your turn");
-        }
-    }
-
-    public void PlayCard(int id, int cardIndex) { // Place a card via the id's hand and card index
-        String card = hands.get(id).get(cardIndex);
-        if (id == turn && (card.charAt(0) == currentCard.charAt(0) || card.charAt(1) == currentCard.charAt(1) || currentCard.equals("NONE"))) {
-            currentCard = card;
-            hands.get(id).remove(cardIndex);
-            turn += 1;
-            if (turn >= hands.size()) {
-                turn = 0;
-            }
-        }
-        else {
-            System.out.println("Invalid Play");
-        }
-    }
-
-    public ArrayList<String> GetHand(int id) { // Get the hand corresponding to the id
-        return hands.get(id);
+        socket.close();
     }
 }

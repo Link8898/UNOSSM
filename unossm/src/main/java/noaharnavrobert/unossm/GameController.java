@@ -11,6 +11,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.io.File;
 
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -18,8 +19,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameController {
-
-    Server logic = new Server(1); // Temporary placement for the initialization of the logic
 
     // Identity
     private final int id = 0;
@@ -29,16 +28,20 @@ public class GameController {
     @FXML
     private AnchorPane container;
     private ArrayList<Button> cards = new ArrayList<Button>();
-
     // Styling
     private final int margin = 60;
+
+
+
 
     @FXML
     protected void onHelloButtonClick() {
         RenderHand();
     }
 
-    private void RenderHand() { // Now fix positioning of the cards (space out based on cards.length or something)
+    private void RenderHand() {
+        Logic logic = new Logic(1);
+        // Now fix positioning of the cards (space out based on cards.length or something)
         container.getChildren().clear(); // Clear the previous hand
         cards = new ArrayList<Button>();
         ArrayList<String> cardData = logic.GetHand(id); // FETCHING DATA

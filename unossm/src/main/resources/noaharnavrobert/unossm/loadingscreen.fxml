@@ -52,5 +52,15 @@
             </AnchorPane>
         </items>
       </SplitPane>
+      <AnchorPane prefHeight="83.0" prefWidth="460.0">
+         <children>
+            <TextField fx:id="namebox" layoutX="150.0" layoutY="42.0" />
+            <Label layoutX="162.0" layoutY="14.0" text="Enter your name here:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </VBox>

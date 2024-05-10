@@ -3,11 +3,15 @@ package noaharnavrobert.unossm;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +36,9 @@ public class LoadingController {
     // textfield where you enter someone's local ip address
     @FXML
     private TextField inputbox;
+    // textfield where you enter your name
+    @FXML
+    private TextField namebox;
 
 
 
@@ -63,13 +70,27 @@ public class LoadingController {
 
     @FXML
     protected void onCreateGame(){
+        Stage stage = (Stage)(startgame.getScene().getWindow());
 
-
+        try {
+            FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyserver.fxml"));
+            Parent root = lobbyserver.load();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     protected void onJoinGame(){
-
+                Stage stage = (Stage)(startgame.getScene().getWindow());
+        try {
+            FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
+            Parent root = lobbyserver.load();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         }
 }
