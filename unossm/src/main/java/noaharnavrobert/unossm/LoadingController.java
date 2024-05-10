@@ -87,6 +87,9 @@ public class LoadingController {
         try {
             FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
             Parent root = lobbyserver.load();
+            LCController controller = (LCController) lobbyserver.getController();
+            
+
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             throw new RuntimeException(e);

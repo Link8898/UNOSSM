@@ -34,6 +34,13 @@ public class GameController {
 
 
 
+    public GameController(String ip){
+
+    }
+
+
+
+
     @FXML
     protected void onHelloButtonClick() {
         RenderHand();
