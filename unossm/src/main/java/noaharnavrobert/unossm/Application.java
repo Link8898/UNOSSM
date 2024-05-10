@@ -2,8 +2,11 @@ package noaharnavrobert.unossm;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Application extends javafx.application.Application {
@@ -17,7 +20,11 @@ public class Application extends javafx.application.Application {
         stage.setScene(scene);
         stage.show();
 
-
+        // Play background music
+        String musicFile = "Lobby.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
     }
 
     public static void main(String[] args) {
