@@ -63,63 +63,13 @@ public class LoadingController {
 
     @FXML
     protected void onCreateGame(){
-        int portNumber = 12345;
 
-        try {
-            // Create a server socket
-
-
-            ServerSocket serverSocket = new ServerSocket(portNumber);
-
-            // Accept a connection from the client
-            Socket clientSocket = serverSocket.accept();
-            System.out.println("Server is running!");
-
-            // Create input stream to receive data from client
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-            // Read data from client
-            String clientData = in.readLine();
-            System.out.println("Received from client: " + clientData);
-
-            // Close resources
-
-            in.close();
-            clientSocket.close();
-            serverSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
     @FXML
     protected void onJoinGame(){
 
-        String serverAddress = inputbox.getText();
 
-
-        int portNumber = 12345;
-
-        try {
-            // Create a socket to connect to the server
-            Socket socket = new Socket(serverAddress, portNumber);
-
-            // Create output stream to send data to server
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-
-            // Send data to server
-            out.println("Hello from client!");
-            System.out.println("Client has sent data!");
-
-            // Close resources
-            out.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
-
-    }
-
 }
