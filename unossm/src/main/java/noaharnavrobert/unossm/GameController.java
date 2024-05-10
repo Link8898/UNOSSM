@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class GameController {
 
-    Logic logic = new Logic(1); // Temporary placement for the initialization of the logic
+    Server logic = new Server(1); // Temporary placement for the initialization of the logic
 
     // Identity
     private final int id = 0;
