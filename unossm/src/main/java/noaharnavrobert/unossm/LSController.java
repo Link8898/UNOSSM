@@ -24,16 +24,20 @@ public class LSController {
 
     private DatagramSocket socket;
     private InetAddress address;
-    private String name;
 
     private byte[] buf;
 
 
-    public LSController(String name){
-        this.name = name;
-    }
+
 
     public void initialize(){
+        try {
+            // starts lobby method to take new players
+            Server server = new Server();
+            server.lobby();
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
         try {
             socket = new DatagramSocket();
         } catch (SocketException e) {
@@ -47,7 +51,6 @@ public class LSController {
             throw new RuntimeException(e);
         }
         players = new ArrayList<String>();
-        players.add(name);
         try {
             Server server = new Server();
         } catch (SocketException e) {

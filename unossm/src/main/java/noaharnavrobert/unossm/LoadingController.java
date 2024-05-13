@@ -39,6 +39,8 @@ public class LoadingController {
     // textfield where you enter your name
     @FXML
     private TextField namebox;
+    // name
+    private String name;
 
 
 
@@ -70,7 +72,20 @@ public class LoadingController {
 
     @FXML
     protected void onCreateGame(){
+
+        name = namebox.getText();
+
         Stage stage = (Stage)(startgame.getScene().getWindow());
+
+        try {
+            DatagramSocket socket = new DatagramSocket();
+            InetAddress address = InetAddress.getByName("localhost");
+        } catch (SocketException | UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        String msg = "";
 
         try {
             FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyserver.fxml"));
@@ -83,17 +98,23 @@ public class LoadingController {
 
     @FXML
     protected void onJoinGame(){
-                Stage stage = (Stage)(startgame.getScene().getWindow());
+
+        if(!(name.isEmpty() || name.isBlank())){
+            name = namebox.getText();
+            Stage stage = (Stage)(startgame.getScene().getWindow());
         try {
             FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
             Parent root = lobbyserver.load();
             LCController controller = (LCController) lobbyserver.getController();
-            
+
 
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        }
+
+
 
         }
 }
