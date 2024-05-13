@@ -3,14 +3,13 @@ package noaharnavrobert.unossm;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 
 public class LSController {
-
-    private ArrayList<String> players;
 
     // label displaying current players
     @FXML
@@ -21,30 +20,60 @@ public class LSController {
     // Button that when pressed starts the game
     @FXML
     private Button startgame;
+    @FXML
+    private Label ip;
 
     private DatagramSocket socket;
     private InetAddress address;
 
     private byte[] buf;
+    private boolean waiting;
 
 
 
 
     public void initialize(){
 
+        getLocalIP();
+
+
+
+
     }
 
+    @FXML
+    protected void getLocalIP() {
+        try{
+            final DatagramSocket socket = new DatagramSocket();
+            socket.connect(InetAddress.getByName("8.8.8.8"), 6969);
+            String ipaddress = socket.getLocalAddress().getHostAddress();
+            ip.setText(ipaddress);
+            ip.setTextFill(Color.GREEN);
+        } catch (UnknownHostException e) {
+            ip.setText("UNKNOWN");
+            startgame.setDisable(true);
+            ip.setTextFill(Color.RED);
+            startgame.setCancelButton(true);
+            System.out.println(e);
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     // when startgame is pressed
     @FXML
     protected void startGame(){
 
+
+
     }
 
     // used to update playercount & players
     @FXML
     protected void playersUpdate(){
+
+        //playercount.setText("2 Players Required to start game ("+players.)
 
     }
 

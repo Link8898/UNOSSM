@@ -1,10 +1,7 @@
 package noaharnavrobert.unossm;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -19,7 +16,7 @@ public class Server extends Thread {
     private boolean waiting;
     // arraylist that contains all of the players
     private ArrayList<String> players;
-
+    private ArrayList<String> playerips;
     public void run() {
 
 
@@ -31,6 +28,7 @@ public class Server extends Thread {
             throw new RuntimeException(e);
         }
         players = new ArrayList();
+        playerips = new ArrayList<>();
 
         waiting = true;
         byte[] buf = new byte[256];
@@ -40,8 +38,12 @@ public class Server extends Thread {
             try {
                 socket.receive(packet);
                 String received = new String(packet.getData());
-                received = received.replace("\0","");
-                players.add(received.split( " ")[1]);
+                received = received.replace("\0", "");
+                players.add(received.split(" ")[1]);
+                playerips.add(received.split(" ")[2]);
+
+                // send packet to server with updated players arraylist
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -84,4 +86,30 @@ public class Server extends Thread {
 
          */
     }
+
+
+    public void sendPlayers(){
+
+        try {
+                DatagramSocket socket = new DatagramSocket();
+
+                InetAddress address = InetAddress.getByName(host);
+
+                String msg = players.toString();
+
+                byte[] buf = msg.getBytes();
+
+                for(String ip : playerips) {
+                    DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByAddress(ip.getBytes()), 1234);
+                    socket.send(packet);
+                }
+
+            } catch (SocketException | UnknownHostException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+    }
+
 }

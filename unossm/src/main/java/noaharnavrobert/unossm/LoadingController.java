@@ -41,6 +41,7 @@ public class LoadingController {
     private TextField namebox;
     // name
     private String name;
+    private String ipaddress;
 
 
 
@@ -55,6 +56,7 @@ public class LoadingController {
             final DatagramSocket socket = new DatagramSocket();
             socket.connect(InetAddress.getByName("8.8.8.8"), 6969);
             String ip = socket.getLocalAddress().getHostAddress();
+            ipaddress = ip;
             ipbox.setText(ip);
             ipbox.setTextFill(Color.GREEN);
         } catch (UnknownHostException e) {
@@ -129,7 +131,7 @@ public class LoadingController {
                 String host = ipbox.getText();
                 InetAddress address = InetAddress.getByName(host);
 
-                String msg = "join " + name;
+                String msg = "join " + name+" "+ipaddress;
 
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);

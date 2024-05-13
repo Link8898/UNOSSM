@@ -42,5 +42,6 @@
             </AnchorPane>
         </items>
       </SplitPane>
+      <Label fx:id="ip" />
    </children>
 </VBox>
