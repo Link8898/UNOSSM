@@ -31,41 +31,9 @@ public class LSController {
 
 
     public void initialize(){
-        // starts lobby method to take new players
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
-        }
-        try {
-            address = InetAddress.getByName("localhost");
-        } catch (UnknownHostException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
-        }
-        players = new ArrayList<String>();
-    }
-
-
-    public void sendPacket(){
-        String msg = "hi";
-        buf = msg.getBytes();
-        DatagramPacket packet
-          = new DatagramPacket(buf, buf.length, address, 1234);
-        try {
-            socket.send(packet);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        packet = new DatagramPacket(buf, buf.length);
-        try {
-            socket.receive(packet);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
     }
+
 
 
     // when startgame is pressed

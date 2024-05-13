@@ -95,21 +95,13 @@ public class LoadingController {
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
                 socket.send(packet);
-                System.out.println("Packet sent!!");
-
-                socket.receive(packet);
-                String received = new String(packet.getData(), 0, packet.getLength());
-
-                if(received.equals("joined")) {
-
-                }
-
 
             } catch (SocketException | UnknownHostException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
 
 
             try {
