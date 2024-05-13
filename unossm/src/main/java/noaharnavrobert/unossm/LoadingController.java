@@ -119,9 +119,30 @@ public class LoadingController {
     @FXML
     protected void onJoinGame(){
 
+        name = namebox.getText();
+
         if(!(name.isEmpty() || name.isBlank())){
-            name = namebox.getText();
             Stage stage = (Stage)(startgame.getScene().getWindow());
+
+            try {
+                DatagramSocket socket = new DatagramSocket();
+                String host = ipbox.getText();
+                InetAddress address = InetAddress.getByName(host);
+
+                String msg = "join " + name;
+
+                byte[] buf = msg.getBytes();
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
+                socket.send(packet);
+                System.out.println("Packet sent");
+
+            } catch (SocketException | UnknownHostException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
         try {
             FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
             Parent root = lobbyserver.load();
