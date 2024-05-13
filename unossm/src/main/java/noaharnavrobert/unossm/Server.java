@@ -47,6 +47,7 @@ public class Server extends Thread {
             packet = new DatagramPacket(buf, buf.length, address, port);
             String received = new String(packet.getData(), 0);
             System.out.println(received);
+            
 
             if (received.equals("end")) {
                 waiting = false;
