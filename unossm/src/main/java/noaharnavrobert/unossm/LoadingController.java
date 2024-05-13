@@ -75,24 +75,52 @@ public class LoadingController {
 
         name = namebox.getText();
 
-        Stage stage = (Stage)(startgame.getScene().getWindow());
-
-        try {
-            DatagramSocket socket = new DatagramSocket();
-            InetAddress address = InetAddress.getByName("localhost");
-        } catch (SocketException | UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
+        // if the name box is not empty
+        if(!(name.isEmpty() || name.isBlank())) {
 
 
-        String msg = "";
+            // start the server - run the "run" methood in the server class
+            Server server = new Server();
+            server.start();
 
-        try {
-            FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyserver.fxml"));
-            Parent root = lobbyserver.load();
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            Stage stage = (Stage) (startgame.getScene().getWindow());
+
+            // send a packet to the server notifying it of the client joining
+            try {
+                DatagramSocket socket = new DatagramSocket();
+                InetAddress address = InetAddress.getByName("localhost");
+
+                String msg = "join " + name;
+
+                byte[] buf = msg.getBytes();
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
+                socket.send(packet);
+                System.out.println("Packet sent!!");
+
+                socket.receive(packet);
+                String received = new String(packet.getData(), 0, packet.getLength());
+
+                if(received.equals("joined")) {
+
+                }
+
+
+            } catch (SocketException | UnknownHostException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            try {
+                FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyserver.fxml"));
+                Parent root = lobbyserver.load();
+                stage.setScene(new Scene(root));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            namebox.setText("Enter name here");
         }
     }
 

@@ -20,18 +20,24 @@ public class Server extends Thread {
     private ArrayList<String> players;
     private byte[] buf = new byte[256];
 
-    public Server() throws SocketException {
-        socket = new DatagramSocket(1234);
-        players = new ArrayList();
-    }
+    public void run() {
 
-    public void lobby() {
+
+        System.out.println("Server lobby started");
+
+        try {
+            socket = new DatagramSocket(1234);
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+        players = new ArrayList();
 
         waiting = true;
-        while(waiting){
+        while (waiting) {
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try {
                 socket.receive(packet);
+                System.out.println("Received packet");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -40,19 +46,17 @@ public class Server extends Thread {
             int port = packet.getPort();
             packet = new DatagramPacket(buf, buf.length, address, port);
             String received = new String(packet.getData(), 0);
+            System.out.println(received);
 
-            if(received.equals("end")) {
+            if (received.equals("end")) {
                 waiting = false;
                 run();
             }
 
-
         }
 
+        /*
 
-    }
-
-    public void run() {
         running = true;
 
         while (running) {
@@ -83,5 +87,8 @@ public class Server extends Thread {
             }
         }
         socket.close();
+    }
+
+         */
     }
 }

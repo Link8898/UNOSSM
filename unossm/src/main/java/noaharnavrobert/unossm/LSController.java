@@ -31,13 +31,7 @@ public class LSController {
 
 
     public void initialize(){
-        try {
-            // starts lobby method to take new players
-            Server server = new Server();
-            server.lobby();
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        }
+        // starts lobby method to take new players
         try {
             socket = new DatagramSocket();
         } catch (SocketException e) {
@@ -51,12 +45,6 @@ public class LSController {
             throw new RuntimeException(e);
         }
         players = new ArrayList<String>();
-        try {
-            Server server = new Server();
-        } catch (SocketException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
-        }
     }
 
 
