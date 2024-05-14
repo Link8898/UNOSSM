@@ -48,6 +48,8 @@ public class LCController {
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
+
+        /*
         boolean waiting = true;
         while(waiting) {
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -74,6 +76,33 @@ public class LCController {
                         throw new RuntimeException(e);
                     }
         }
+
+         */
+
+        DatagramPacket packet = new DatagramPacket(buf, buf.length);
+            try {
+                socket.receive(packet);
+                String received = new String(packet.getData());
+                received = received.replace("\0", "");
+
+                if(received.split(" ")[0].equals("joined")){
+                    serveraddress = String.valueOf(packet.getAddress());
+                    name = received.split(" ")[1];
+
+                } else if (received.split(" ").equals("players")) {
+
+                    String playersstring = received.split(" ")[1];
+
+                    String[] strSplit = playersstring.split("");
+
+                    players = new ArrayList<>(Arrays.asList(strSplit));
+                    playersUpdate(players);
+
+                }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
         socket.close();
 
 

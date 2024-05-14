@@ -130,7 +130,7 @@ public class LoadingController {
 
             try {
                 DatagramSocket socket = new DatagramSocket();
-                String host = ipbox.getText();
+                String host = inputbox.getText();
                 InetAddress address = InetAddress.getByName(host);
 
                 String msg = "join " + name+" "+ipaddress;
@@ -138,6 +138,7 @@ public class LoadingController {
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
                 socket.send(packet);
+                System.out.println(packet.getAddress());
 
             } catch (SocketException | UnknownHostException e) {
                 throw new RuntimeException(e);
@@ -147,10 +148,12 @@ public class LoadingController {
 
 
         try {
+            System.out.println("beginning transfer to lobbyclient");
             FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
             Parent root = lobbyserver.load();
 
             stage.setScene(new Scene(root));
+            System.out.println("transfer complete");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

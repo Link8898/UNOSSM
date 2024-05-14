@@ -37,7 +37,19 @@ public class Server extends Thread {
                 if(received.split(" ")[0].equals("join")){
                     players.add(received.split(" ")[1]);
                     playerips.add(received.split(" ")[2]);
-                    System.out.println(received);
+
+                    String msg = "joined "+players.get(-1);
+                    byte[] buffer = msg.getBytes();
+
+                    try {
+                        DatagramPacket packet1 = new DatagramPacket(buf, buf.length, InetAddress.getByName(playerips.get(-1)), 1234);
+                        socket.send(packet1);
+                    } catch (UnknownHostException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                     sendPlayers();
                 } else if (received.split(" ")[0].equals("start")) {
                     socket.close();
