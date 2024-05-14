@@ -30,6 +30,7 @@ public class GameController {
     private ArrayList<Button> cards = new ArrayList<Button>();
     // Styling
     private final int margin = 60;
+    private Logic logic = new Logic(1);
 
     @FXML
     protected void onHelloButtonClick() {
@@ -37,7 +38,6 @@ public class GameController {
     }
 
     private void RenderHand() {
-        Logic logic = new Logic(1);
         // Now fix positioning of the cards (space out based on cards.length or something)
         container.getChildren().clear(); // Clear the previous hand
         cards = new ArrayList<Button>();
