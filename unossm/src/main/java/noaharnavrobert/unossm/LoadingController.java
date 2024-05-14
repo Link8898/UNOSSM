@@ -149,10 +149,12 @@ public class LoadingController {
 
         try {
             System.out.println("beginning transfer to lobbyclient");
-            FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
-            Parent root = lobbyserver.load();
+            FXMLLoader lobby = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
+            Scene scene = new Scene(lobby.load(), 500, 500);
+            Stage currentStage = (Stage) namebox.getScene().getWindow();
+            currentStage.setScene(scene);
+            currentStage.show();
 
-            stage.setScene(new Scene(root));
             System.out.println("transfer complete");
         } catch (IOException e) {
             throw new RuntimeException(e);
