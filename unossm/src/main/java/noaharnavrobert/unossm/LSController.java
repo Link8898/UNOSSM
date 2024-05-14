@@ -1,9 +1,13 @@
 package noaharnavrobert.unossm;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.*;
@@ -74,11 +78,25 @@ public class LSController {
             throw new RuntimeException(e);
         }
 
+                try {
+            FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
+            Parent root = game.load();
+            LCController controller = (LCController) game.getController();
+            Stage stage = (Stage) ip.getScene().getWindow();
+
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     // used to update playercount & players
     @FXML
     protected void playersUpdate(){
+
+
 
         //playercount.setText("2 Players Required to start game ("+players.)
 
