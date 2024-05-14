@@ -39,8 +39,14 @@ public class Server extends Thread {
                 socket.receive(packet);
                 String received = new String(packet.getData());
                 received = received.replace("\0", "");
-                players.add(received.split(" ")[1]);
-                playerips.add(received.split(" ")[2]);
+                if(received.split(" ")[0].equals("join")){
+                    players.add(received.split(" ")[1]);
+                    playerips.add(received.split(" ")[2]);
+                    sendPlayers();
+                } else if (received.split(" ")[0].equals("start")) {
+                    game();
+                }
+
 
                 // send packet to server with updated players arraylist
 
@@ -93,8 +99,6 @@ public class Server extends Thread {
         try {
                 DatagramSocket socket = new DatagramSocket();
 
-                InetAddress address = InetAddress.getByName(host);
-
                 String msg = players.toString();
 
                 byte[] buf = msg.getBytes();
@@ -109,6 +113,11 @@ public class Server extends Thread {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+    }
+
+
+    public void game(){
 
     }
 
