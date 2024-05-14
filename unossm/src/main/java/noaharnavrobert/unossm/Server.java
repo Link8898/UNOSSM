@@ -41,7 +41,7 @@ public class Server extends Thread {
                     byte[] buffer = msg.getBytes();
 
                     try {
-                        DatagramPacket packet1 = new DatagramPacket(buf, buf.length, InetAddress.getByName(playerips.get(-1)), 1234);
+                        DatagramPacket packet1 = new DatagramPacket(buf, buf.length, InetAddress.getByName(playerips.get(playerips.size() - 1)), 1234);
                         socket.send(packet1);
                     } catch (UnknownHostException e) {
                         throw new RuntimeException(e);
