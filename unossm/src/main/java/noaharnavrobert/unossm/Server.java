@@ -46,40 +46,30 @@ public class Server extends Thread {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         }
-
     }
-
 
     public void sendPlayers(){
-
         try {
-                DatagramSocket socket = new DatagramSocket();
+            DatagramSocket socket = new DatagramSocket();
+            String msg = players.toString();
 
-                String msg = players.toString();
+            byte[] buf = msg.getBytes();
 
-                byte[] buf = msg.getBytes();
-
-                for(String ip : playerips) {
-                    DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 1234);
-                    socket.send(packet);
-                }
-
-            } catch (SocketException | UnknownHostException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            for(String ip : playerips) {
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 1234);
+                socket.send(packet);
             }
 
+        } catch (SocketException | UnknownHostException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 
     public void game(){
-            Logic logic = new Logic(players.size());
+        Logic logic = new Logic(players.size());
         System.out.println("Game started");
-
     }
-
-
 }
