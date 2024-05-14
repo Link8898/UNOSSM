@@ -31,16 +31,6 @@ public class GameController {
     // Styling
     private final int margin = 60;
 
-
-
-
-    public GameController(String ip){
-
-    }
-
-
-
-
     @FXML
     protected void onHelloButtonClick() {
         RenderHand();

@@ -92,7 +92,7 @@ public class LoadingController {
                 DatagramSocket socket = new DatagramSocket();
                 InetAddress address = InetAddress.getByName("localhost");
 
-                String msg = "join " + name+" "+ipaddress;
+                String msg = "join " + name + " " + ipaddress;
 
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);

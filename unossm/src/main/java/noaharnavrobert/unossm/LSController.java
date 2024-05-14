@@ -78,13 +78,13 @@ public class LSController {
             throw new RuntimeException(e);
         }
 
-                try {
+        try {
             FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
-            Parent root = game.load();
-            LCController controller = (LCController) game.getController();
+            Scene scene = new Scene(game.load(), 500, 500);
             Stage stage = (Stage) ip.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
 
-            stage.setScene(new Scene(root));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
