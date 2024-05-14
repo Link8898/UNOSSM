@@ -23,23 +23,14 @@ public class LSController {
     @FXML
     private Label ip;
 
-    private DatagramSocket socket;
-    private InetAddress address;
+    private String ipaddress;
 
     private byte[] buf;
-    private boolean waiting;
 
 
 
 
-    public void initialize(){
-
-        getLocalIP();
-
-
-
-
-    }
+    public void initialize(){ getLocalIP();}
 
     @FXML
     protected void getLocalIP() {
@@ -49,6 +40,7 @@ public class LSController {
             String ipaddress = socket.getLocalAddress().getHostAddress();
             ip.setText(ipaddress);
             ip.setTextFill(Color.GREEN);
+            this.ipaddress = ipaddress;
         } catch (UnknownHostException e) {
             ip.setText("UNKNOWN");
             startgame.setDisable(true);
@@ -65,7 +57,22 @@ public class LSController {
     @FXML
     protected void startGame(){
 
+        try {
+                DatagramSocket socket = new DatagramSocket();
+                InetAddress address = InetAddress.getByName("localhost");
 
+                String msg = "start "+ ipaddress;
+
+                byte[] buf = msg.getBytes();
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
+                socket.send(packet);
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

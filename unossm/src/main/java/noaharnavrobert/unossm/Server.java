@@ -2,18 +2,12 @@ package noaharnavrobert.unossm;
 
 import java.io.IOException;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class Server extends Thread {
 
-    // server variables
-    // port 1234
-    private DatagramSocket socket;
     // boolean for when the game starts
     private boolean running;
-    // boolean for when the lobby is running
-    private boolean waiting;
     // arraylist that contains all of the players
     private ArrayList<String> players;
     private ArrayList<String> playerips;
@@ -22,6 +16,9 @@ public class Server extends Thread {
 
         System.out.println("Server lobby started");
 
+        // server variables
+        // port 1234
+        DatagramSocket socket;
         try {
             socket = new DatagramSocket(1234);
         } catch (SocketException e) {
@@ -30,7 +27,8 @@ public class Server extends Thread {
         players = new ArrayList();
         playerips = new ArrayList<>();
 
-        waiting = true;
+        // boolean for when the lobby is running
+        boolean waiting = true;
         byte[] buf = new byte[256];
 
         while (waiting) {
@@ -56,41 +54,6 @@ public class Server extends Thread {
 
         }
 
-        /*
-
-        running = true;
-
-        while (running) {
-            DatagramPacket packet
-              = new DatagramPacket(buf, buf.length);
-            try {
-                socket.receive(packet);
-            } catch (IOException e) {
-                System.out.println(e);
-                throw new RuntimeException(e);
-            }
-
-            InetAddress address = packet.getAddress();
-            int port = packet.getPort();
-            packet = new DatagramPacket(buf, buf.length, address, port);
-            String received
-              = new String(packet.getData(), 0, packet.getLength());
-
-            if (received.equals("end")) {
-                running = false;
-                continue;
-            }
-            try {
-                socket.send(packet);
-            } catch (IOException e) {
-                System.out.println(e);
-                throw new RuntimeException(e);
-            }
-        }
-        socket.close();
-    }
-
-         */
     }
 
 
@@ -118,7 +81,10 @@ public class Server extends Thread {
 
 
     public void game(){
+            Logic logic = new Logic(players.size());
+        System.out.println("Game started");
 
     }
+
 
 }
