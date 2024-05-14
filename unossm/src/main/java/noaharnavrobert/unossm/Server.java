@@ -37,9 +37,7 @@ public class Server extends Thread {
                 if(received.split(" ")[0].equals("join")){
                     players.add(received.split(" ")[1]);
                     playerips.add(received.split(" ")[2]);
-                    System.out.println(players);
-                    System.out.println(playerips);
-                    String msg = "joined "+players.get(-1);
+                    String msg = "joined "+players.get(players.size()-1);
                     byte[] buffer = msg.getBytes();
 
                     try {
