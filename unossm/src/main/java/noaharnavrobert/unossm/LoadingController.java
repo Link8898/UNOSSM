@@ -136,7 +136,6 @@ public class LoadingController {
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
                 socket.send(packet);
-                System.out.println("Packet sent");
 
             } catch (SocketException | UnknownHostException e) {
                 throw new RuntimeException(e);
@@ -148,8 +147,6 @@ public class LoadingController {
         try {
             FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
             Parent root = lobbyserver.load();
-            LCController controller = (LCController) lobbyserver.getController();
-
 
             stage.setScene(new Scene(root));
         } catch (IOException e) {

@@ -36,12 +36,18 @@ public class Server extends Thread {
                 received = received.replace("\0", "");
                 if(received.split(" ")[0].equals("join")){
                     players.add(received.split(" ")[1]);
-                    System.out.println(received.split(" ")[1]);
                     playerips.add(received.split(" ")[2]);
-                    System.out.println(received.split(" ")[2]);
                     sendPlayers();
                 } else if (received.split(" ")[0].equals("start")) {
+                    socket.close();
+                    waiting = false;
+                    running = true;
                     game();
+                } else if (received.split(" ")[0].equals("leave")) {
+
+                    players.remove(received.split(" ")[1]);
+                    playerips.remove(received.split(" ")[2]);
+
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -52,7 +58,7 @@ public class Server extends Thread {
     public void sendPlayers(){
         try {
             DatagramSocket socket = new DatagramSocket();
-            String msg = players.toString();
+            String msg = "players "+players.toString();
 
             byte[] buf = msg.getBytes();
 
@@ -70,6 +76,29 @@ public class Server extends Thread {
 
     public void game(){
         Logic logic = new Logic(players.size());
-        System.out.println("Game started");
+        DatagramSocket socket = null;
+        try {
+            socket = new DatagramSocket(1234);
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+
+        int counter = 0;
+        for(String ip : playerips) {
+
+            String msg = "joined "+players.get(counter);
+            byte[] buf = msg.getBytes();
+
+            try {
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 1234);
+                socket.send(packet);
+            } catch (UnknownHostException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
     }
 }

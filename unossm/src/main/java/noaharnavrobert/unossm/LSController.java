@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LSController {
 
@@ -28,13 +29,58 @@ public class LSController {
     private Label ip;
 
     private String ipaddress;
+    private String serveraddress;
+    private String name;
+    private ArrayList<String> players;
 
     private byte[] buf;
 
 
 
 
-    public void initialize(){ getLocalIP();}
+    public void initialize(){
+
+        getLocalIP();
+
+
+        byte[] buf = new byte[256];
+        DatagramSocket socket = null;
+        try {
+            socket = new DatagramSocket(1234);
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+        boolean waiting = true;
+        while(waiting) {
+        DatagramPacket packet = new DatagramPacket(buf, buf.length);
+            try {
+                socket.receive(packet);
+                String received = new String(packet.getData());
+                received = received.replace("\0", "");
+
+                if(received.split(" ")[0].equals("joined")){
+                    serveraddress = String.valueOf(packet.getAddress());
+                    name = received.split(" ")[1];
+
+                } else if (received.split(" ").equals("players")) {
+
+                    String playersstring = received.split(" ")[1];
+
+                    String[] strSplit = playersstring.split("");
+
+                    players = new ArrayList<>(Arrays.asList(strSplit));
+                    playersUpdate(players);
+
+                }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+        }
+        socket.close();
+
+
+
+    }
 
     @FXML
     protected void getLocalIP() {
@@ -78,6 +124,7 @@ public class LSController {
             throw new RuntimeException(e);
         }
 
+
         try {
             FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
             Scene scene = new Scene(game.load(), 500, 500);
@@ -94,11 +141,15 @@ public class LSController {
 
     // used to update playercount & players
     @FXML
-    protected void playersUpdate(){
+    protected void playersUpdate(ArrayList<String> players){
+        if(players.size() < 2) {
+            playercount.setText("2 Players Required to start game ("+players.size()+")");
+        } else {
+            playercount.setTextFill(Color.GREEN);
+            playercount.setText("The game can now be started by host ("+players.size()+")");
+        }
 
-
-
-        //playercount.setText("2 Players Required to start game ("+players.)
+        playerlist.setText(players.toString());
 
     }
 
