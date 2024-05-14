@@ -94,40 +94,29 @@ public class LCController {
 
                     players = new ArrayList<>(Arrays.asList(strSplit));
                     playersUpdate(players);
-
                 }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-
         socket.close();
-
-
-
     }
 
 
     // used to update playercount & players
     @FXML
     protected void playersUpdate(ArrayList<String> players){
-
         if(players.size() < 2) {
             playercount.setText("2 Players Required to start game ("+players.size()+")");
         } else {
             playercount.setTextFill(Color.GREEN);
             playercount.setText("The game can now be started by host ("+players.size()+")");
         }
-
         playerlist.setText(players.toString());
-
-
     }
 
     @FXML
     protected void leaveServer(){
-
         try {
-
             String msg = "leave "+name+" "+localip;
 
             byte[] buf = msg.getBytes();
@@ -155,11 +144,7 @@ public class LCController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
-
-
 }
 
 
