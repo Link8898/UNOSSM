@@ -13,9 +13,6 @@ public class Server extends Thread {
     private ArrayList<String> playerips;
     public void run() {
 
-
-        System.out.println("Server lobby started");
-
         // server variables
         // port 1234
         DatagramSocket socket;
@@ -39,7 +36,9 @@ public class Server extends Thread {
                 received = received.replace("\0", "");
                 if(received.split(" ")[0].equals("join")){
                     players.add(received.split(" ")[1]);
+                    System.out.println(received.split(" ")[1]);
                     playerips.add(received.split(" ")[2]);
+                    System.out.println(received.split(" ")[2]);
                     sendPlayers();
                 } else if (received.split(" ")[0].equals("start")) {
                     game();
