@@ -138,7 +138,7 @@ public class LoadingController {
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
                 socket.send(packet);
-                System.out.println(packet.getAddress());
+                System.out.println("packet sent");
 
             } catch (SocketException | UnknownHostException e) {
                 throw new RuntimeException(e);

@@ -35,6 +35,7 @@ public class Server extends Thread {
                 String received = new String(packet.getData());
                 received = received.replace("\0", "");
                 if(received.split(" ")[0].equals("join")){
+                    System.out.println(received);
                     players.add(received.split(" ")[1]);
                     playerips.add(received.split(" ")[2]);
                     String msg = "joined "+players.get(players.size()-1);
