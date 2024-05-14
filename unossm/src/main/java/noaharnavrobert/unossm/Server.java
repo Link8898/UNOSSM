@@ -44,10 +44,6 @@ public class Server extends Thread {
                 } else if (received.split(" ")[0].equals("start")) {
                     game();
                 }
-
-
-                // send packet to server with updated players arraylist
-
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -66,7 +62,9 @@ public class Server extends Thread {
 
                 byte[] buf = msg.getBytes();
 
+
                 for(String ip : playerips) {
+                    System.out.println(InetAddress.getByAddress(ip.getBytes()));
                     DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByAddress(ip.getBytes()), 1234);
                     socket.send(packet);
                 }
