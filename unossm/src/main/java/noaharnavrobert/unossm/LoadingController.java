@@ -59,7 +59,6 @@ public class LoadingController {
             ipaddress = ip;
             ipbox.setText(ip);
             ipbox.setTextFill(Color.GREEN);
-            System.out.println("socket closed");
         } catch (UnknownHostException e) {
             ipbox.setText("UNKNOWN");
             startgame.setDisable(true);
@@ -111,11 +110,8 @@ public class LoadingController {
 
             try {
                 FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyserver.fxml"));
-                System.out.println("1");
                 Parent root = lobbyserver.load();
-                System.out.println("2");
                 stage.setScene(new Scene(root));
-                System.out.println("3");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
