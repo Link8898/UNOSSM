@@ -138,7 +138,6 @@ public class LoadingController {
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
                 socket.send(packet);
-                System.out.println("packet sent");
 
             } catch (SocketException | UnknownHostException e) {
                 throw new RuntimeException(e);
@@ -148,14 +147,12 @@ public class LoadingController {
 
 
         try {
-            System.out.println("beginning transfer to lobbyclient");
             FXMLLoader lobby = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
             Scene scene = new Scene(lobby.load(), 500, 500);
             Stage currentStage = (Stage) namebox.getScene().getWindow();
             currentStage.setScene(scene);
             currentStage.show();
 
-            System.out.println("transfer complete");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -29,16 +29,16 @@ public class LCController {
     private Label ip;
 
     private String name;
+    private String localip;
     private String serveraddress;
     private ArrayList<String> players;
-    private String ipaddress;
-
 
 
 
     public void initialize(){
 
-        getLocalIP();
+        ip.setText(serveraddress);
+        ip.setTextFill(Color.GREEN);
 
 
         byte[] buf = new byte[256];
@@ -88,6 +88,8 @@ public class LCController {
                 if(received.split(" ")[0].equals("joined")){
                     serveraddress = String.valueOf(packet.getAddress());
                     name = received.split(" ")[1];
+                    localip = received.split(" ")[2];
+
 
                 } else if (received.split(" ").equals("players")) {
 
@@ -131,7 +133,7 @@ public class LCController {
 
         try {
 
-            String msg = "leave "+name+" "+ipaddress;
+            String msg = "leave "+name+" "+localip;
 
             byte[] buf = msg.getBytes();
 
@@ -160,28 +162,6 @@ public class LCController {
         }
 
 
-    }
-
-
-
-    @FXML
-    protected void getLocalIP() {
-        try{
-            final DatagramSocket socket = new DatagramSocket();
-            socket.connect(InetAddress.getByName("8.8.8.8"), 6969);
-            String ipaddress = socket.getLocalAddress().getHostAddress();
-            ip.setText(ipaddress);
-            ip.setTextFill(Color.GREEN);
-            this.ipaddress = ipaddress;
-        } catch (UnknownHostException e) {
-            ip.setText("UNKNOWN");
-            startgame.setDisable(true);
-            ip.setTextFill(Color.RED);
-            startgame.setCancelButton(true);
-            System.out.println(e);
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 

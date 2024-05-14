@@ -35,14 +35,13 @@ public class Server extends Thread {
                 String received = new String(packet.getData());
                 received = received.replace("\0", "");
                 if(received.split(" ")[0].equals("join")){
-                    System.out.println(received);
                     players.add(received.split(" ")[1]);
                     playerips.add(received.split(" ")[2]);
-                    String msg = "joined "+players.get(players.size()-1);
+                    String msg = "joined "+players.get(players.size()-1) +" "+ playerips.get(playerips.size()-1);
                     byte[] buffer = msg.getBytes();
 
                     try {
-                        DatagramPacket packet1 = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(playerips.get(playerips.size() - 1)), 1234);
+                        DatagramPacket packet1 = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(playerips.get(playerips.size() - 1)), 5678);
                         socket.send(packet1);
                     } catch (UnknownHostException e) {
                         throw new RuntimeException(e);
@@ -76,7 +75,7 @@ public class Server extends Thread {
             byte[] buf = msg.getBytes();
 
             for(String ip : playerips) {
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 1234);
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 5678);
                 socket.send(packet);
             }
 
@@ -99,7 +98,7 @@ public class Server extends Thread {
         int counter = 0;
         for(String ip : playerips) {
 
-            String msg = "joined "+players.get(counter);
+            String msg = "game "+players.get(counter)+" "+playerips.get(counter);
             byte[] buf = msg.getBytes();
 
             try {
@@ -110,7 +109,7 @@ public class Server extends Thread {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
+            counter++;
         }
 
     }
