@@ -61,10 +61,8 @@ public class Server extends Thread {
 
                 byte[] buf = msg.getBytes();
 
-
                 for(String ip : playerips) {
-                    System.out.println(InetAddress.getByAddress(ip.getBytes()));
-                    DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByAddress(ip.getBytes()), 1234);
+                    DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 1234);
                     socket.send(packet);
                 }
 
