@@ -46,10 +46,12 @@ public class LSController {
         byte[] buf = new byte[256];
         DatagramSocket socket = null;
         try {
-            socket = new DatagramSocket(1234);
+            socket = new DatagramSocket(5678);
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
+
+        /*
         boolean waiting = true;
         while(waiting) {
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -76,6 +78,8 @@ public class LSController {
                         throw new RuntimeException(e);
                     }
         }
+        
+         */
         socket.close();
 
 

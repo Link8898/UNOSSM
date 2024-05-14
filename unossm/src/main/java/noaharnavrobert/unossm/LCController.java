@@ -44,7 +44,7 @@ public class LCController {
         byte[] buf = new byte[256];
         DatagramSocket socket = null;
         try {
-            socket = new DatagramSocket(1234);
+            socket = new DatagramSocket(5678);
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
@@ -106,7 +106,7 @@ public class LCController {
 
             byte[] buf = msg.getBytes();
 
-            DatagramSocket socket = new DatagramSocket(1234);
+            DatagramSocket socket = new DatagramSocket(5678);
             DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(serveraddress), 1234);
 
             socket.send(packet);
@@ -132,6 +132,7 @@ public class LCController {
 
 
     }
+
 
 
     @FXML

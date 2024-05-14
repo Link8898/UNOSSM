@@ -59,6 +59,7 @@ public class LoadingController {
             ipaddress = ip;
             ipbox.setText(ip);
             ipbox.setTextFill(Color.GREEN);
+            System.out.println("socket closed");
         } catch (UnknownHostException e) {
             ipbox.setText("UNKNOWN");
             startgame.setDisable(true);
@@ -72,6 +73,7 @@ public class LoadingController {
 
 
 
+
     @FXML
     protected void onCreateGame(){
 
@@ -81,7 +83,7 @@ public class LoadingController {
         if(!(name.isEmpty() || name.isBlank())) {
 
 
-            // start the server - run the "run" methood in the server class
+            // start the server - run the "run" method in the server class
             Server server = new Server();
             server.start();
 
@@ -89,7 +91,7 @@ public class LoadingController {
 
             // send a packet to the server notifying it of the client joining
             try {
-                DatagramSocket socket = new DatagramSocket();
+                DatagramSocket socket = new DatagramSocket(5678);
                 InetAddress address = InetAddress.getByName("localhost");
 
                 String msg = "join " + name + " " + ipaddress;
@@ -97,6 +99,7 @@ public class LoadingController {
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
                 socket.send(packet);
+                socket.close();
 
             } catch (SocketException | UnknownHostException e) {
                 throw new RuntimeException(e);
@@ -108,8 +111,11 @@ public class LoadingController {
 
             try {
                 FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyserver.fxml"));
+                System.out.println("1");
                 Parent root = lobbyserver.load();
+                System.out.println("2");
                 stage.setScene(new Scene(root));
+                System.out.println("3");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
