@@ -84,7 +84,7 @@ public class LCController {
                     serveraddress = String.valueOf(packet.getAddress());
                     name = received.split(" ")[1];
                     localip = received.split(" ")[2];
-                    ip.setText(serveraddress);
+                    ip.setText(serveraddress.replace("/", ""));
                     ip.setTextFill(Color.GREEN);
                 } else if (received.split(" ").equals("players")) {
 
