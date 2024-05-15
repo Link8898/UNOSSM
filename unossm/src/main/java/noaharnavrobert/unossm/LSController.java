@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -33,7 +34,6 @@ public class LSController {
     private String name;
     private ArrayList<String> players;
 
-    private byte[] buf;
 
 
 
@@ -43,46 +43,34 @@ public class LSController {
         getLocalIP();
 
 
-        byte[] buf = new byte[256];
-        DatagramSocket socket = null;
-        try {
-            socket = new DatagramSocket(5678);
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        }
+    }
 
-        /*
-        boolean waiting = true;
-        while(waiting) {
-        DatagramPacket packet = new DatagramPacket(buf, buf.length);
+
+    public void startupPing(String name){
+        this.name = name;
+
+        LSListener listener = new LSListener();
+        listener.start();
+
+
             try {
-                socket.receive(packet);
-                String received = new String(packet.getData());
-                received = received.replace("\0", "");
 
-                if(received.split(" ")[0].equals("joined")){
-                    serveraddress = String.valueOf(packet.getAddress());
-                    name = received.split(" ")[1];
+                DatagramSocket socket = new DatagramSocket();
+                InetAddress address = InetAddress.getByName("localhost");
 
-                } else if (received.split(" ").equals("players")) {
+                String msg = "join " + name + " " + ipaddress;
 
-                    String playersstring = received.split(" ")[1];
+                byte[] buf = msg.getBytes();
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
+                socket.send(packet);
+                System.out.println("1");
+                socket.close();
 
-                    String[] strSplit = playersstring.split("");
-
-                    players = new ArrayList<>(Arrays.asList(strSplit));
-                    playersUpdate(players);
-
-                }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-        }
-
-         */
-        socket.close();
-
-
+            } catch (SocketException | UnknownHostException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
     }
 

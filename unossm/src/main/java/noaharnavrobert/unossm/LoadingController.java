@@ -88,29 +88,12 @@ public class LoadingController {
 
             Stage stage = (Stage) (startgame.getScene().getWindow());
 
-            // send a packet to the server notifying it of the client joining
-            try {
-                DatagramSocket socket = new DatagramSocket(5678);
-                InetAddress address = InetAddress.getByName("localhost");
-
-                String msg = "join " + name + " " + ipaddress;
-
-                byte[] buf = msg.getBytes();
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
-                socket.send(packet);
-                socket.close();
-
-            } catch (SocketException | UnknownHostException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-
 
             try {
                 FXMLLoader lobbyserver = new FXMLLoader(Application.class.getResource("lobbyserver.fxml"));
                 Parent root = lobbyserver.load();
+                LSController controller = lobbyserver.getController();
+                controller.startupPing(name);
                 stage.setScene(new Scene(root));
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -118,6 +101,7 @@ public class LoadingController {
         } else {
             namebox.setText("Enter name here");
         }
+
     }
 
     @FXML
@@ -149,7 +133,7 @@ public class LoadingController {
         try {
             FXMLLoader lobby = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
             Scene scene = new Scene(lobby.load(), 500, 500);
-            Stage currentStage = (Stage) namebox.getScene().getWindow();
+            Stage currentStage = (Stage) ipbox.getScene().getWindow();
             currentStage.setScene(scene);
             currentStage.show();
 
@@ -161,4 +145,6 @@ public class LoadingController {
 
 
         }
+
+
 }
