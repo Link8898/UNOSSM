@@ -32,8 +32,8 @@ public class LCListener extends Thread {
             try {
 
                 socket.receive(packet);
-                String received = new String(packet.getData());
-                received = received.replace("\0", "");
+                byte[] data = Arrays.copyOf(packet.getData(), packet.getLength());
+                String received = new String(data);
                 System.out.println(received);
 
                 if(received.split(" ")[0].equals("joined")){

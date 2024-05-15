@@ -1,5 +1,6 @@
 package noaharnavrobert.unossm;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -19,7 +24,7 @@ public class LSController {
 
     // label displaying current players
     @FXML
-    private Label playerlist;
+    private Label playerList;
     // label displaying the current playercount
     @FXML
     private Label playercount;
@@ -32,17 +37,13 @@ public class LSController {
     private String ipaddress;
     private String serveraddress;
     private String name;
-    private ArrayList<String> players;
 
 
 
 
 
     public void initialize(){
-
         getLocalIP();
-
-
     }
 
 
@@ -63,7 +64,6 @@ public class LSController {
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
                 socket.send(packet);
-                System.out.println("1");
                 socket.close();
 
             } catch (SocketException | UnknownHostException e) {
@@ -134,16 +134,26 @@ public class LSController {
     // used to update playercount & players
     @FXML
     protected void playersUpdate(ArrayList<String> players){
-        if(players.size() < 2) {
-            playercount.setText("2 Players Required to start game ("+players.size()+")");
-        } else {
-            playercount.setTextFill(Color.GREEN);
-            playercount.setText("The game can now be started by host ("+players.size()+")");
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                String message = "2 Players Required to start game (";
 
-        playerlist.setText(players.toString());
+                if (players.size() >= 2) {
+                    playercount.setTextFill(Color.GREEN);
+                    message = "The game can now be started by host (";
+                }
+                message += players.size() + ")";
 
+                playercount.setText(message);
+
+                playerList.setText("");
+                String text = "";
+                for (int i = 0; i < players.size(); i++) {
+                    playerList.setText(playerList.getText()+players.get(i));
+                }
+
+            }
+        });
     }
-
-
 }

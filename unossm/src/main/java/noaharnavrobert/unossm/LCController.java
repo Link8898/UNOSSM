@@ -57,8 +57,8 @@ public class LCController {
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try {
                 socket.receive(packet);
-                String received = new String(packet.getData());
-                received = received.replace("\0", "");
+                byte[] data = Arrays.copyOf(packet.getData(), packet.getLength());
+                String received = new String(data);
 
                 if(received.split(" ")[0].equals("joined")){
                     serveraddress = String.valueOf(packet.getAddress());

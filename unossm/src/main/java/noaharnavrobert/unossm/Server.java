@@ -3,6 +3,7 @@ package noaharnavrobert.unossm;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Server extends Thread {
 
@@ -32,10 +33,8 @@ public class Server extends Thread {
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try {
                 socket.receive(packet);
-                System.out.println("2");
-                String received = new String(packet.getData());
-                received = received.replace("\0", "");
-                System.out.println(received);
+                byte[] data = Arrays.copyOf(packet.getData(), packet.getLength());
+                String received = new String(data);
                 if(received.split(" ")[0].equals("join")){
 
                     newPLayer(received);
@@ -58,17 +57,17 @@ public class Server extends Thread {
     }
 
     public void sendPlayers(){
-        System.out.println("5");
         try {
             DatagramSocket socket = new DatagramSocket();
             String msg = "players "+players.toString();
+            System.out.println(msg);
+            System.out.println(players);
 
             byte[] buf = msg.getBytes();
 
             for(String ip : playerips) {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 5678);
                 socket.send(packet);
-                System.out.println("6");
             }
 
         } catch (SocketException | UnknownHostException e) {
@@ -79,7 +78,6 @@ public class Server extends Thread {
     }
 
     public void newPLayer(String received){
-        System.out.println("3");
         DatagramSocket socket = null;
         try {
             socket = new DatagramSocket();
@@ -97,7 +95,6 @@ public class Server extends Thread {
         try {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(playerips.get(playerips.size() - 1)), 5678);
             socket.send(packet);
-            System.out.println("4");
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
