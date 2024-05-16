@@ -24,7 +24,7 @@ public class LSController {
 
     // label displaying current players
     @FXML
-    private Label playerList;
+    private VBox playerList;
     // label displaying the current playercount
     @FXML
     private Label playercount;
@@ -47,10 +47,10 @@ public class LSController {
     }
 
 
-    public void startupPing(String name){
+    public void startupPing(String name, LSController controller){
         this.name = name;
 
-        LSListener listener = new LSListener();
+        LSListener listener = new LSListener(controller);
         listener.start();
 
 
@@ -145,14 +145,13 @@ public class LSController {
                 }
                 message += players.size() + ")";
 
-                playercount.setText(message);
-
-                playerList.setText("");
-                String text = "";
-                for (int i = 0; i < players.size(); i++) {
-                    playerList.setText(playerList.getText()+players.get(i));
+                playerList.getChildren().clear();
+                for( String player : players ){
+                    Label playerLabel = new Label (player.substring(1, player.length()-1));
+                    playerList.getChildren().add(playerLabel);
                 }
 
+                playercount.setText(message);
             }
         });
     }

@@ -1,5 +1,6 @@
 package noaharnavrobert.unossm;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
@@ -16,6 +17,11 @@ public class LSListener extends Thread {
     private String serveraddress;
     private String name;
     private ArrayList<String> players;
+    private LSController controller;
+
+    public LSListener( LSController controller){
+        this.controller = controller;
+    }
 
     public void run(){
         boolean waiting = true;
@@ -40,11 +46,8 @@ public class LSListener extends Thread {
 
                     String[] strSplit = playersstring.split(",");
                     players = new ArrayList<>(Arrays.asList(strSplit));
-                    FXMLLoader loader = new FXMLLoader(Application.class.getResource("lobbyserver.fxml"));
-
-                    Parent p = loader.load();
-                    LSController controller = loader.getController();
                     controller.playersUpdate(players);
+
                 }
             }
         } catch (SocketException e) {

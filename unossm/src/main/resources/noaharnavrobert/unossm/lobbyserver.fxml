@@ -30,7 +30,9 @@
                   </Label>
                </top>
                <center>
-                  <Label fx:id="playerList" text="hi" BorderPane.alignment="CENTER" />
+                   <VBox fx:id="playerList">
+                       <Label text="BOB"/>
+                   </VBox>
                </center>
             </BorderPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
