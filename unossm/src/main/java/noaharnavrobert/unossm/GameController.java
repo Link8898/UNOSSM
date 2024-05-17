@@ -1,5 +1,6 @@
 package noaharnavrobert.unossm;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,6 +10,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+
 import java.io.File;
 
 import java.net.DatagramSocket;
@@ -74,9 +77,15 @@ public class GameController {
 
     public void Connect(String serverIP) {
         System.out.println(serverIP);
-        GameListener listener = new GameListener();
-        listener.start();
-        RenderHand();
-
+        Runnable task = () -> {
+            Platform.runLater(() -> {
+                GameListener listener = new GameListener();
+                listener.start();
+                RenderHand();
+            });
+        };
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 }
