@@ -13,6 +13,7 @@ public class Server extends Thread {
     // arraylist that contains all of the players
     private ArrayList<String> players;
     private ArrayList<String> playerips;
+    private Logic logic; // Game logic
     public void run() {
 
         // server variables
@@ -122,12 +123,10 @@ public class Server extends Thread {
     }
 
     public void game(){
-        Logic logic = new Logic(players.size());
-
+        logic = new Logic(players.size());
         try {
             ServerSocket serverSocket = new ServerSocket(1234);
             System.out.println("TCP Listening on port 1234");
-
             while(running) {
                 Socket socket = serverSocket.accept();
 
@@ -141,10 +140,7 @@ public class Server extends Thread {
                 
                 String text = reader.readLine();
                 System.out.println(text);
-
-
             }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
