@@ -123,6 +123,9 @@ public class LSController {
             stage.setScene(scene);
             stage.show();
 
+            GameController gameController = game.getController();
+            gameController.Connect(serveraddress);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
