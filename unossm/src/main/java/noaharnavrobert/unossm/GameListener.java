@@ -2,7 +2,11 @@ package noaharnavrobert.unossm;
 
 public class GameListener extends Thread{
 
-    String hostname;
+    String serveraddress;
+
+    public GameListener(String server){
+        serveraddress = server;
+    }
 
     public void run() {
 
