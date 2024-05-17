@@ -33,11 +33,6 @@ public class GameController {
     private final int margin = 60;
     private Logic logic = new Logic(1);
 
-    @FXML
-    protected void onHelloButtonClick() {
-        RenderHand();
-    }
-
     private void RenderHand() {
         // Now fix positioning of the cards (space out based on cards.length or something)
         container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
@@ -77,7 +72,8 @@ public class GameController {
         }
     }
 
-    public void initialize() {
-        // RenderHand();
+    public void Connect(String serverIP) {
+        System.out.println(serverIP);
+        RenderHand();
     }
 }
