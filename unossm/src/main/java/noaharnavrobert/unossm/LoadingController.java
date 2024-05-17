@@ -123,24 +123,24 @@ public class LoadingController {
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
                 socket.send(packet);
+                System.err.println("joinpacket sent");
+
+                try {
+                FXMLLoader lobbyclient = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
+                Parent root = lobbyclient.load();
+                LCController controller = lobbyclient.getController();
+
+                controller.startupPing(name, controller);
+                stage.setScene(new Scene(root));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             } catch (SocketException | UnknownHostException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-
-        try {
-            FXMLLoader lobby = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
-            Scene scene = new Scene(lobby.load(), 500, 500);
-            Stage currentStage = (Stage) ipbox.getScene().getWindow();
-            currentStage.setScene(scene);
-            currentStage.show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         }
 
 

@@ -35,10 +35,9 @@ public class Server extends Thread {
                 socket.receive(packet);
                 byte[] data = Arrays.copyOf(packet.getData(), packet.getLength());
                 String received = new String(data);
+                System.out.println(received);
                 if(received.split(" ")[0].equals("join")){
-
                     newPLayer(received);
-
                 } else if (received.split(" ")[0].equals("start")) {
 
                     try {

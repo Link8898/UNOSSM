@@ -34,7 +34,7 @@ public class LCListener extends Thread {
             while(waiting) {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
-
+                System.err.println("received");
                 byte[] data = Arrays.copyOf(packet.getData(), packet.getLength());
                 String received = new String(data);
                 System.out.println("received " + received);
