@@ -51,7 +51,30 @@ public class GameListener extends Thread{
         return hand;
     }
 
-    public void GetCurrent() {
-        
+    public String GetCurrent(int id) {
+        String card = "";
+
+        out.println("getcurrent "+id);
+
+        try {
+            card = in.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return card;
+    }
+
+    public int GetID(String ipaddress) {
+        int id = 0;
+
+        out.println("getid "+ ipaddress);
+
+        try {
+            id = Integer.parseInt(in.readLine());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
     }
 }
