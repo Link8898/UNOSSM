@@ -51,6 +51,7 @@ public class LCListener extends Thread {
                     controller.playersUpdate(players);
 
                 } else if (received.split(" ")[0].equals("start")) {
+                    System.err.println("received start");
                     controller.startGame();
                 }
             }
