@@ -124,7 +124,7 @@ public class LSController {
             stage.show();
 
             GameController gameController = game.getController();
-            gameController.Connect(serveraddress);
+            gameController.Connect(ipaddress, serveraddress);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

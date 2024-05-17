@@ -104,7 +104,7 @@ public class LCController {
             thread.setDaemon(true);
             thread.start();
             GameController gameController = game.getController();
-            gameController.Connect(serveraddress);
+            gameController.Connect(ipaddress, serveraddress);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

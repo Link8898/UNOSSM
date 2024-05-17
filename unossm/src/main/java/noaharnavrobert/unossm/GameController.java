@@ -92,6 +92,7 @@ public class GameController {
         }
     }
 
+<<<<<<< Updated upstream
     @FXML
     protected void onDrawButtonClick(){
         logic.DrawCard(id);
@@ -99,14 +100,18 @@ public class GameController {
     }
 
     public void Connect(String serverIP) {
+=======
+    public void Connect(String clientIP, String serverIP) {
+>>>>>>> Stashed changes
         Runnable task = () -> {
             Platform.runLater(() -> {
                 GameListener listener = new GameListener(serverIP);
                 listener.start();
+                id = GetID(clientIP);
                 RenderHand();
-                //sound = new Media(new File("URL").toURI().toString());
-                //MediaPlayer mediaPlayer = new MediaPlayer(sound);
-                //mediaPlayer.play();
+                sound = new Media(new File("src/main/resources/sounds/game.mp3").toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.play();
             });
         };
         Thread thread = new Thread(task);
