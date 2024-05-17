@@ -43,13 +43,10 @@ public class Server extends Thread {
 
                     try {
                         String msg = "start "+playerips.get(0);
-                        System.out.println(msg);
-                        System.out.println(players);
-
                         byte[] buffer = msg.getBytes();
 
                         for(String ip : playerips) {
-                            DatagramPacket startPacket = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 5678);
+                            DatagramPacket startPacket = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ip), 5678);
                             socket.send(startPacket);
                         }
 
