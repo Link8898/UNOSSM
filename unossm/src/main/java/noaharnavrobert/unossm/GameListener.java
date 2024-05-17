@@ -61,7 +61,7 @@ public class GameListener extends Thread{
 
     public String GetCurrent(String ip) {
         String card = "";
-
+        System.out.println("getcurrent "+ip);
         out.println("getcurrent "+ip);
 
         try {
