@@ -39,7 +39,9 @@ public class GameController {
     private void RenderHand() {
         container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
         cards = new ArrayList<Button>();
+        System.err.println("1");
         ArrayList<String> cardData = listener.GetHand(ip); // FETCHING DATA
+        System.err.println("2");
         for (int index = 0; index < cardData.size(); index++) {
             // Create and style the card
             Button card = new Button();
