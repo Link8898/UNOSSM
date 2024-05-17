@@ -18,7 +18,7 @@ public class GameListener extends Thread{
 
     public void run() {
         try {
-            socket = new Socket(serveraddress, 1234);
+            socket = new Socket(serveraddress, 5678);
 
              out = new PrintWriter(socket.getOutputStream(), true);
 
