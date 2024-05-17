@@ -1,11 +1,17 @@
 package noaharnavrobert.unossm;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -18,97 +24,76 @@ public class LCController {
 
     // label displaying current players
     @FXML
-    private Label playerlist;
+    private VBox playerList;
     // label displaying the current playercount
     @FXML
     private Label playercount;
     // Button that when pressed starts the game
     @FXML
-    private Button startgame;
-    @FXML
     private Label ip;
 
-    private String name;
-    private String localip;
+    private String ipaddress;
     private String serveraddress;
-    private ArrayList<String> players;
-
+    private String name;
 
 
     public void initialize(){
+        getLocalIP();
+    }
 
-        LCListener listener = new LCListener();
+
+    public void startupPing(String name, LCController controller){
+        this.name = name;
+
+        LCListener listener = new LCListener(controller);
         listener.start();
 
-        byte[] buf = new byte[256];
-        DatagramSocket socket = null;
-        try {
-            socket = new DatagramSocket();
+
+            try {
+                DatagramSocket socket = new DatagramSocket();
+                InetAddress address = InetAddress.getByName("localhost");
+
+                String msg = "join " + name + " " + ipaddress;
+
+                byte[] buf = msg.getBytes();
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
+                socket.send(packet);
+                socket.close();
+
+            } catch (SocketException | UnknownHostException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+    }
+
+    @FXML
+    protected void getLocalIP() {
+        try{
+            final DatagramSocket socket = new DatagramSocket();
+            socket.connect(InetAddress.getByName("8.8.8.8"), 6969);
+            String ipaddress = socket.getLocalAddress().getHostAddress();
+            ip.setText(ipaddress);
+            ip.setTextFill(Color.GREEN);
+            this.ipaddress = ipaddress;
+        } catch (UnknownHostException e) {
+            ip.setText("UNKNOWN");
+            ip.setTextFill(Color.RED);
+            System.out.println(e);
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
-
-
-        /*
-
-
-         */
-
-        DatagramPacket packet = new DatagramPacket(buf, buf.length);
-            try {
-                socket.receive(packet);
-                byte[] data = Arrays.copyOf(packet.getData(), packet.getLength());
-                String received = new String(data);
-
-                if(received.split(" ")[0].equals("joined")){
-                    serveraddress = String.valueOf(packet.getAddress());
-                    name = received.split(" ")[1];
-                    localip = received.split(" ")[2];
-                    ip.setText(serveraddress.replace("/", ""));
-                    ip.setTextFill(Color.GREEN);
-                } else if (received.split(" ").equals("players")) {
-
-                    String playersstring = received.split(" ")[1];
-
-                    String[] strSplit = playersstring.split("");
-
-                    players = new ArrayList<>(Arrays.asList(strSplit));
-                    playersUpdate(players);
-                }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-        socket.close();
     }
 
 
-    // used to update playercount & players
+    // when startgame is pressed
     @FXML
-    protected void playersUpdate(ArrayList<String> players){
-        if(players.size() < 2) {
-            playercount.setText("2 Players Required to start game ("+players.size()+")");
-        } else {
-            playercount.setTextFill(Color.GREEN);
-            playercount.setText("The game can now be started by host ("+players.size()+")");
-        }
-        playerlist.setText(players.toString());
-    }
+    protected void startGame(){
 
-    @FXML
-    protected void leaveServer(){
         try {
-            String msg = "leave "+name+" "+localip;
-
-            byte[] buf = msg.getBytes();
-
-            DatagramSocket socket = new DatagramSocket(5678);
-            DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(serveraddress), 1234);
-
-            socket.send(packet);
-
-            try {
-            FXMLLoader loadingscreen = new FXMLLoader(Application.class.getResource("loadingscreen.fxml"));
-            Scene scene = new Scene(loadingscreen.load(), 500, 500);
+            FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
+            Scene scene = new Scene(game.load(), 500, 500);
             Stage stage = (Stage) ip.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
@@ -117,15 +102,31 @@ public class LCController {
             throw new RuntimeException(e);
         }
 
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+    }
+
+    // used to update playercount & players
+    @FXML
+    protected void playersUpdate(ArrayList<String> players){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                String message = "2 Players Required to start game (";
+
+                if (players.size() >= 2) {
+                    playercount.setTextFill(Color.GREEN);
+                    message = "The game can now be started by host (";
+                }
+                message += players.size() + ")";
+
+                playerList.getChildren().clear();
+                for( String player : players ){
+                    Label playerLabel = new Label (player.substring(1, player.length()-1));
+                    playerList.getChildren().add(playerLabel);
+                }
+
+                playercount.setText(message);
+            }
+        });
     }
 }
-
-
-

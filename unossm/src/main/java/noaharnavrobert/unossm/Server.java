@@ -40,6 +40,26 @@ public class Server extends Thread {
                     newPLayer(received);
 
                 } else if (received.split(" ")[0].equals("start")) {
+
+                    try {
+                        String msg = "start "+playerips.get(0);
+                        System.out.println(msg);
+                        System.out.println(players);
+
+                        byte[] buffer = msg.getBytes();
+
+                        for(String ip : playerips) {
+                            DatagramPacket startPacket = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 5678);
+                            socket.send(startPacket);
+                        }
+
+                    } catch (SocketException | UnknownHostException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
                     socket.close();
                     waiting = false;
                     running = true;
