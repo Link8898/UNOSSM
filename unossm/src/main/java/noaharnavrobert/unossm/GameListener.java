@@ -13,11 +13,10 @@ public class GameListener extends Thread{
     BufferedReader in;
 
     public GameListener(String server){
-        serveraddress = server;
-    }
 
-    public void run() {
-        try {
+        serveraddress = server;
+
+                try {
             socket = new Socket(serveraddress, 1234);
 
              out = new PrintWriter(socket.getOutputStream(), true);
@@ -35,8 +34,17 @@ public class GameListener extends Thread{
         }
     }
 
+    public void run() {
+
+    }
+
     public ArrayList<String> GetHand(String ip) {
         ArrayList<String> hand = new ArrayList<String>();
+        try {
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         out.println("gethand "+ip);
 
