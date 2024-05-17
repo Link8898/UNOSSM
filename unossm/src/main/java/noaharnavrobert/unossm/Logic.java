@@ -54,4 +54,5 @@ public class Logic {
     public ArrayList<String> GetHand(int id) { // Get the hand corresponding to the id
         return hands.get(id);
     }
+    public String CurrentCard() { return currentCard; }
 }

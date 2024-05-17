@@ -2,27 +2,28 @@ package noaharnavrobert.unossm;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 500);
+
+        FXMLLoader introloader = new FXMLLoader(Application.class.getResource("loadingscreen.fxml"));
+        Scene scene = new Scene(introloader.load(), 500, 500);
         stage.setTitle("UNOSSM");
         stage.setScene(scene);
         stage.show();
-<<<<<<< Updated upstream
-=======
 
         // Play background music
         String musicFile = "src/main/resources/sounds/Lobby.mp3";
         Media sound = new Media(new File(musicFile).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         //mediaPlayer.play();
->>>>>>> Stashed changes
     }
 
     public static void main(String[] args) {
