@@ -92,6 +92,12 @@ public class GameController {
         }
     }
 
+    @FXML
+    protected void onDrawButtonClick(){
+        logic.DrawCard(id);
+        RenderHand();
+    }
+
     public void Connect(String serverIP) {
         Runnable task = () -> {
             Platform.runLater(() -> {
