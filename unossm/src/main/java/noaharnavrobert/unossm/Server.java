@@ -1,8 +1,6 @@
 package noaharnavrobert.unossm;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -135,8 +133,15 @@ public class Server extends Thread {
 
                 System.out.println("Client connected!");
 
+                InputStream input = socket.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
                 OutputStream output = socket.getOutputStream();
                 PrintWriter writer = new PrintWriter(output, true);
+                
+                String text = reader.readLine();
+                System.out.println(text);
+
 
             }
 
