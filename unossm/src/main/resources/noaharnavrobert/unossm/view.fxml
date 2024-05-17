@@ -2,13 +2,24 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
 
 <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noaharnavrobert.unossm.GameController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <Button onAction="#onHelloButtonClick" text="Render" />
-   <AnchorPane fx:id="container" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkgreen;" />
+    <AnchorPane fx:id="container" prefHeight="551.0" prefWidth="616.0" style="-fx-background-color: darkgreen;">
+        <children>
+         <TextFlow layoutX="134.0" layoutY="14.0" prefHeight="73.0" prefWidth="213.0" />
+            <ImageView fitHeight="460.0" fitWidth="482.0" layoutY="1.0">
+                <image>
+                    <Image url="@../../images/felt.jpeg" />
+                </image>
+            </ImageView>
+         <Button layoutX="214.0" layoutY="215.0" onAction="#onHelloButtonClick" text="Draw" />
+        </children></AnchorPane>
 </VBox>
