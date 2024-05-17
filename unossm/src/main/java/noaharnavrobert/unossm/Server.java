@@ -138,8 +138,8 @@ public class Server extends Thread {
                 String msg = in.readLine();
                 String[] split_msg = msg.split(" ");
                 if(split_msg[0].equals("gethand")){
-                    int index = Integer.parseInt(split_msg[1]);
-                    out.println(logic.GetHand(index).toString());
+                    int id = playerips.indexOf(split_msg[1]);
+                    out.println(logic.GetHand(id).toString());
                 } else if(split_msg[0].equals("getcurrent")){
                     out.println(logic.CurrentCard());
                 } 

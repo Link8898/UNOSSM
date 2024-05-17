@@ -35,10 +35,10 @@ public class GameListener extends Thread{
         }
     }
 
-    public ArrayList<String> GetHand(int id) {
+    public ArrayList<String> GetHand(String ip) {
         ArrayList<String> hand = new ArrayList<String>();
 
-        out.println("gethand "+id);
+        out.println("gethand "+ip);
 
         try {
             String res = in.readLine();
@@ -51,10 +51,10 @@ public class GameListener extends Thread{
         return hand;
     }
 
-    public String GetCurrent(int id) {
+    public String GetCurrent(String ip) {
         String card = "";
 
-        out.println("getcurrent "+id);
+        out.println("getcurrent "+ip);
 
         try {
             card = in.readLine();
