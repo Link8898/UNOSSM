@@ -31,13 +31,13 @@ public class GameController {
     private ArrayList<String> hand;
     @FXML
     private AnchorPane container;
+    @FXML Button playedcard;
     private ArrayList<Button> cards = new ArrayList<Button>();
     // Styling
     private final int margin = 60;
     private Logic logic = new Logic(1);
 
     private void RenderHand() {
-        // Now fix positioning of the cards (space out based on cards.length or something)
         container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
         cards = new ArrayList<Button>();
         ArrayList<String> cardData = logic.GetHand(id); // FETCHING DATA
@@ -72,6 +72,22 @@ public class GameController {
         }
         for (Button card: cards) { // Append new hand
             container.getChildren().add(card);
+        }
+        // Render the most recently played card
+        String currentCard = logic.CurrentCard();
+        if (currentCard.equals("NONE")) {
+            String style = "-fx-background-color: " + "gray" + "; -fx-text-fill: black; -fx-font-size: 200%;";
+            playedcard.setText("");
+            playedcard.setStyle(style);
+        }
+        else {
+            String color = "red";
+            if (currentCard.charAt(0) == 'g') { color = "green"; }
+            else if (currentCard.charAt(0) == 'b') { color = "lightblue"; }
+            else if (currentCard.charAt(0) == 'y') { color = "yellow"; }
+            String style = "-fx-background-color: " + color + "; -fx-text-fill: black; -fx-font-size: 300%;";
+            playedcard.setText(currentCard.substring(1));
+            playedcard.setStyle(style);
         }
     }
 
