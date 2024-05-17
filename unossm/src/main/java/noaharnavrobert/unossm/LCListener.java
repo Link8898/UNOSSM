@@ -33,10 +33,9 @@ public class LCListener extends Thread {
             while(waiting) {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
-                System.err.println("received");
                 byte[] data = Arrays.copyOf(packet.getData(), packet.getLength());
                 String received = new String(data);
-                System.out.println("received " + received);
+                System.out.println("Received data: " + received);
 
                 if (received.split(" ")[0].equals("joined")) {
                     serveraddress = String.valueOf(packet.getAddress());
@@ -47,11 +46,11 @@ public class LCListener extends Thread {
                     String[] nameArray = playerNames.split(",");
                     players = new ArrayList<>(Arrays.asList(nameArray));
                     controller.playersUpdate(players);
-                    System.err.println("called playersUpdate");
 
                 } else if (received.split(" ")[0].equals("start")) {
-                    System.err.println("received start");
+                    System.out.println("Attempting to start game");
                     controller.startGame();
+                    System.out.println("Start method was called");
                 }
             }
         } catch (SocketException e) {

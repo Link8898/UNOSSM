@@ -88,21 +88,20 @@ public class LCController {
     }
 
 
-    // when startgame is pressed
-    @FXML
     protected void startGame(){
-
+        System.out.println("I was called to start the game");
         try {
             FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
             Scene scene = new Scene(game.load(), 500, 500);
-            Stage stage = (Stage) ip.getScene().getWindow();
+            System.out.println("Now stage");
+            Stage stage = (Stage)(ip.getScene().getWindow());
             stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        System.out.println("Game should have started");
 
     }
 
