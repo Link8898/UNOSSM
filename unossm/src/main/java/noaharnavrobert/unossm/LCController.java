@@ -121,7 +121,7 @@ public class LCController {
 
                 playerList.getChildren().clear();
                 for( String player : players ){
-                    Label playerLabel = new Label (player.substring(1, player.length()-1));
+                    Label playerLabel = new Label (player.substring(1, player.length()));
                     playerList.getChildren().add(playerLabel);
                 }
 

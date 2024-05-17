@@ -47,7 +47,6 @@ public class Server extends Thread {
 
                         for(String ip : playerips) {
                             DatagramPacket startPacket = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ip), 5678);
-                            System.err.println(msg+" "+ip);
                             socket.send(startPacket);
                         }
 

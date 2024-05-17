@@ -42,12 +42,10 @@ public class LSListener extends Thread {
                     name = received.split(" ")[1];
 
                 } else if (received.split(" ")[0].equals("players")) {
-                    String playersstring = received.split(" ")[1];
-
-                    String[] strSplit = playersstring.split(",");
-                    players = new ArrayList<>(Arrays.asList(strSplit));
+                    String playerNames = received.substring("players".length() + 1, received.length() - 1);
+                    String[] nameArray = playerNames.split(",");
+                    players = new ArrayList<>(Arrays.asList(nameArray));
                     controller.playersUpdate(players);
-
                 }
             }
         } catch (SocketException e) {

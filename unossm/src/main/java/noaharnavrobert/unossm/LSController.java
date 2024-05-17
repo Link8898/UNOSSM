@@ -97,17 +97,16 @@ public class LSController {
 
     // when startgame is pressed
     @FXML
-    protected void startGame(){
+    protected void startGame() {
+        try { // Tell clients the game has started and establish a TCP connection
+            DatagramSocket socket = new DatagramSocket();
+            InetAddress address = InetAddress.getByName("localhost");
 
-        try {
-                DatagramSocket socket = new DatagramSocket();
-                InetAddress address = InetAddress.getByName("localhost");
+            String msg = "start "+ ipaddress;
 
-                String msg = "start "+ ipaddress;
-
-                byte[] buf = msg.getBytes();
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
-                socket.send(packet);
+            byte[] buf = msg.getBytes();
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
+            socket.send(packet);
         } catch (SocketException e) {
             throw new RuntimeException(e);
         } catch (UnknownHostException e) {
@@ -138,7 +137,6 @@ public class LSController {
             @Override
             public void run() {
                 String message = "2 Players Required to start game (";
-
                 if (players.size() >= 2) {
                     playercount.setTextFill(Color.GREEN);
                     message = "The game can now be started by host (";
@@ -147,7 +145,7 @@ public class LSController {
 
                 playerList.getChildren().clear();
                 for( String player : players ){
-                    Label playerLabel = new Label (player.substring(1, player.length()-1));
+                    Label playerLabel = new Label (player.substring(1, player.length()));
                     playerList.getChildren().add(playerLabel);
                 }
 
