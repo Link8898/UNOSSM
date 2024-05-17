@@ -74,6 +74,9 @@ public class GameController {
 
     public void Connect(String serverIP) {
         System.out.println(serverIP);
+        GameListener listener = new GameListener();
+        listener.start();
         RenderHand();
+
     }
 }

@@ -1,9 +1,12 @@
 package noaharnavrobert.unossm;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class Server extends Thread {
 
@@ -123,6 +126,26 @@ public class Server extends Thread {
     public void game(){
         Logic logic = new Logic(players.size());
 
+        try {
+            ServerSocket serverSocket = new ServerSocket(1234);
+            System.out.println("TCP Listening on port 1234");
+
+            while(running) {
+                Socket socket = serverSocket.accept();
+
+                System.out.println("Client connected!");
+
+                OutputStream output = socket.getOutputStream();
+                PrintWriter writer = new PrintWriter(output, true);
+
+                writer.println("hi");
+
+
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }
