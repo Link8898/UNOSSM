@@ -35,6 +35,7 @@ public class GameController {
     private ArrayList<Button> cards = new ArrayList<Button>();
     // Styling
     private final int margin = 60;
+    private Media sound;
     private Logic logic = new Logic(1);
 
     private void RenderHand() {
@@ -97,6 +98,9 @@ public class GameController {
                 GameListener listener = new GameListener(serverIP);
                 listener.start();
                 RenderHand();
+                //sound = new Media(new File("URL").toURI().toString());
+                //MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                //mediaPlayer.play();
             });
         };
         Thread thread = new Thread(task);
