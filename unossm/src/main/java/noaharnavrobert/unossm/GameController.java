@@ -78,7 +78,7 @@ public class GameController {
         // Render the most recently played card
         System.err.println("1");
         //String currentCard = listener.GetCurrent();
-        String currentCard = "g4";
+        String currentCard = "NONE";
         System.err.println(currentCard);
         System.err.println("2");
         if (currentCard.equals("NONE")) {
@@ -99,7 +99,7 @@ public class GameController {
 
     @FXML
     protected void onDrawButtonClick() {
-        //logic.DrawCard(id);
+        listener.DrawCard(ip);
         RenderHand();
     }
 
