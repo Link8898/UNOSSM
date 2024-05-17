@@ -32,10 +32,12 @@ public class GameListener extends Thread{
     }
 
     public ArrayList<String> GetHand(int id) {
+        ArrayList<String> hand = new ArrayList<String>();
 
         // client requests its hand
         // server return logic.getHand()
 
+        return hand;
     }
 
 }
