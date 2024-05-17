@@ -76,10 +76,9 @@ public class GameController {
     }
 
     public void Connect(String serverIP) {
-        System.out.println(serverIP);
         Runnable task = () -> {
             Platform.runLater(() -> {
-                GameListener listener = new GameListener();
+                GameListener listener = new GameListener(serverIP);
                 listener.start();
                 RenderHand();
             });
