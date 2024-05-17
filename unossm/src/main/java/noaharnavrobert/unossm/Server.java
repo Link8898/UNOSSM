@@ -138,9 +138,6 @@ public class Server extends Thread {
                 OutputStream output = socket.getOutputStream();
                 PrintWriter writer = new PrintWriter(output, true);
 
-                writer.println("hi");
-
-
             }
 
         } catch (IOException e) {

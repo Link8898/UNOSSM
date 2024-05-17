@@ -10,10 +10,4 @@ public class GameListener extends Thread{
 
     }
 
-
-    public void getHostname(String hostname) {
-        this.hostname = hostname;
-
-    }
-
 }
