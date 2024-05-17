@@ -14,6 +14,15 @@ public class Application extends javafx.application.Application {
         stage.setTitle("UNOSSM");
         stage.setScene(scene);
         stage.show();
+<<<<<<< Updated upstream
+=======
+
+        // Play background music
+        String musicFile = "src/main/resources/sounds/Lobby.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        //mediaPlayer.play();
+>>>>>>> Stashed changes
     }
 
     public static void main(String[] args) {
