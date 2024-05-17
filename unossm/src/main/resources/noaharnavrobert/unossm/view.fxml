@@ -16,7 +16,7 @@
    <Pane prefHeight="200.0" prefWidth="200.0">
       <children>
          <Button fx:id="draw" layoutY="12.0" text="Draw" />
-         <Button fx:id="quit" layoutX="427.0" layoutY="12.0" mnemonicParsing="false" text="Quit" />
+         <Button fx:id="quit" layoutX="427.0" layoutY="12.0" mnemonicParsing="false" text="Music" />
          <Label id="current" fx:id="textboxcurrent" layoutX="202.0" layoutY="19.0" text="Current Card:" />
          <Button fx:id="playedcard" layoutX="187.0" layoutY="51.0" minWidth="53.0" mnemonicParsing="false" prefHeight="149.0" prefWidth="111.0" text="Button" />
       </children>
