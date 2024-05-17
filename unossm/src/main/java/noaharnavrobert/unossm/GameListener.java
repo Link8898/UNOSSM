@@ -60,10 +60,9 @@ public class GameListener extends Thread{
         return hand;
     }
 
-    public String GetCurrent(String ip) {
+    public String GetCurrent() {
         String card = "";
-        System.out.println("getcurrent "+ip);
-        out.println("getcurrent "+ip);
+        out.println("getcurrent");
 
         try {
             card = in.readLine();
