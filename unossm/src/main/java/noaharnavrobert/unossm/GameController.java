@@ -35,13 +35,13 @@ public class GameController {
     private ArrayList<Button> cards = new ArrayList<Button>();
     // Styling
     private final int margin = 60;
+    private GameListener listener;
     private Media sound;
-    private Logic logic = new Logic(1);
 
     private void RenderHand() {
         container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
         cards = new ArrayList<Button>();
-        ArrayList<String> cardData = logic.GetHand(id); // FETCHING DATA
+        ArrayList<String> cardData = listener.GetHand(id); // FETCHING DATA
         for (int index = 0; index < cardData.size(); index++) {
             // Create and style the card
             Button card = new Button();
@@ -62,7 +62,7 @@ public class GameController {
             EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    logic.PlayCard(id, cards.indexOf(card));
+                    //logic.PlayCard(id, cards.indexOf(card));
                     RenderHand();
                 }
             };
@@ -75,7 +75,7 @@ public class GameController {
             container.getChildren().add(card);
         }
         // Render the most recently played card
-        String currentCard = logic.CurrentCard();
+        String currentCard = listener.GetCurrent(id);
         if (currentCard.equals("NONE")) {
             String style = "-fx-background-color: " + "gray" + "; -fx-text-fill: black; -fx-font-size: 200%;";
             playedcard.setText("");
@@ -93,15 +93,15 @@ public class GameController {
     }
 
     @FXML
-    protected void onDrawButtonClick(){
-        logic.DrawCard(id);
+    protected void onDrawButtonClick() {
+        //logic.DrawCard(id);
         RenderHand();
     }
 
     public void Connect(String clientIP, String serverIP) {
         Runnable task = () -> {
             Platform.runLater(() -> {
-                GameListener listener = new GameListener(serverIP);
+                listener = new GameListener(serverIP);
                 listener.start();
                 id = listener.GetID(clientIP);
                 RenderHand();
