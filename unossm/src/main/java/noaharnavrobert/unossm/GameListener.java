@@ -7,6 +7,9 @@ import java.util.ArrayList;
 public class GameListener extends Thread{
 
     String serveraddress;
+    Socket socket;
+    PrintWriter out;
+    BufferedReader in;
 
     public GameListener(String server){
         serveraddress = server;
@@ -14,16 +17,16 @@ public class GameListener extends Thread{
 
     public void run() {
         try {
-            Socket socket = new Socket(serveraddress, 1234);
+            socket = new Socket(serveraddress, 1234);
 
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             out = new PrintWriter(socket.getOutputStream(), true);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            out.println("NoahSucks");
+            //out.println("gethand");
 
-            String response = in.readLine();
-            System.out.println("Server says: "+response);
+            //String response = in.readLine();
+            //System.out.println("Server says: "+response);
 
 
         } catch (IOException e) {
@@ -34,10 +37,20 @@ public class GameListener extends Thread{
     public ArrayList<String> GetHand(int id) {
         ArrayList<String> hand = new ArrayList<String>();
 
-        // client requests its hand
-        // server return logic.getHand()
+        out.println("gethand");
+
+        try {
+            String response = in.readLine();
+            // convert string arraylist to arraylist
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return hand;
     }
+
+    public voi
+
 
 }
