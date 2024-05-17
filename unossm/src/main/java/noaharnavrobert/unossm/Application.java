@@ -20,10 +20,10 @@ public class Application extends javafx.application.Application {
         stage.show();
 
         // Play background music
-        //String musicFile = "Lobby.mp3";
-        //Media sound = new Media(new File(musicFile).toURI().toString());
-        //MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        //mediaPlayer.play();
+        String musicFile = "src/main/resources/sounds/Lobby.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
     }
 
     public static void main(String[] args) {

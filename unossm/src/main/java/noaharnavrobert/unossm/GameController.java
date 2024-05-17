@@ -23,10 +23,8 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class GameController {
-
     // Identity
-    private int id = 0;
-
+    String ip;
     // Player's Hand of Cards
     private ArrayList<String> hand;
     @FXML
@@ -41,7 +39,7 @@ public class GameController {
     private void RenderHand() {
         container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
         cards = new ArrayList<Button>();
-        ArrayList<String> cardData = listener.GetHand(id); // FETCHING DATA
+        ArrayList<String> cardData = listener.GetHand(ip); // FETCHING DATA
         for (int index = 0; index < cardData.size(); index++) {
             // Create and style the card
             Button card = new Button();
@@ -75,7 +73,7 @@ public class GameController {
             container.getChildren().add(card);
         }
         // Render the most recently played card
-        String currentCard = listener.GetCurrent(id);
+        String currentCard = listener.GetCurrent(ip);
         if (currentCard.equals("NONE")) {
             String style = "-fx-background-color: " + "gray" + "; -fx-text-fill: black; -fx-font-size: 200%;";
             playedcard.setText("");
@@ -103,7 +101,7 @@ public class GameController {
             Platform.runLater(() -> {
                 listener = new GameListener(serverIP);
                 listener.start();
-                id = listener.GetID(clientIP);
+                ip = clientIP;
                 RenderHand();
                 sound = new Media(new File("src/main/resources/sounds/game.mp3").toURI().toString());
                 MediaPlayer mediaPlayer = new MediaPlayer(sound);
