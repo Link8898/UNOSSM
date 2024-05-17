@@ -50,6 +50,7 @@ public class GameListener extends Thread{
 
         try {
             String res = in.readLine();
+            res = res.substring(1, res.length() - 1);
             hand = new ArrayList<String>(Arrays.asList(res.split(", ")));
 
         } catch (IOException e) {
