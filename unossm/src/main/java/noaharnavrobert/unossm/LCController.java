@@ -44,6 +44,7 @@ public class LCController {
 
     public void startupPing(String name, LCController controller, String host){
         this.name = name;
+        serveraddress = host;
 
         LCListener listener = new LCListener(controller);
         listener.start();
