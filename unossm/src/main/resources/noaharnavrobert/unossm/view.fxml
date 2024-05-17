@@ -20,6 +20,6 @@
                     <Image url="@../../images/felt.jpeg" />
                 </image>
             </ImageView>
-         <Button layoutX="214.0" layoutY="215.0" onAction="#onHelloButtonClick" text="Draw" />
+         <Button layoutX="214.0" layoutY="215.0" text="Draw" />
         </children></AnchorPane>
 </VBox>
