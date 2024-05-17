@@ -3,6 +3,7 @@ package noaharnavrobert.unossm;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameListener extends Thread{
 
@@ -40,8 +41,8 @@ public class GameListener extends Thread{
         out.println("gethand "+id);
 
         try {
-            String response = in.readLine();
-            // convert string arraylist to arraylist
+            String res = in.readLine();
+            hand = new ArrayList<String>(Arrays.asList(res.split(", ")));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
