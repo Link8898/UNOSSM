@@ -9,20 +9,21 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="347.0" prefWidth="522.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noaharnavrobert.unossm.GameController">
+<VBox alignment="CENTER" prefHeight="490.0" prefWidth="525.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noaharnavrobert.unossm.GameController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <Pane prefHeight="200.0" prefWidth="200.0">
       <children>
-         <Button id="draw" layoutY="12.0" text="Draw" />
-         <Button id="quit" layoutX="427.0" layoutY="12.0" mnemonicParsing="false" text="Quit" />
-         <Label id="current" layoutX="202.0" layoutY="19.0" text="Current Card:" />
+         <Button fx:id="draw" layoutY="12.0" text="Draw" />
+         <Button fx:id="quit" layoutX="427.0" layoutY="12.0" mnemonicParsing="false" text="Quit" />
+         <Label id="current" fx:id="textboxcurrent" layoutX="202.0" layoutY="19.0" text="Current Card:" />
+         <Button fx:id="playedcard" layoutX="187.0" layoutY="51.0" minWidth="53.0" mnemonicParsing="false" prefHeight="149.0" prefWidth="111.0" text="Button" />
       </children>
    </Pane>
     <AnchorPane fx:id="container" prefHeight="179.0" prefWidth="482.0" style="-fx-background-color: darkgreen;">
         <children>
-            <ImageView id="image" fitHeight="229.0" fitWidth="482.0">
+            <ImageView fx:id="image" fitHeight="229.0" fitWidth="482.0">
                 <image>
                     <Image url="@../../images/felt.jpeg" />
                 </image>
