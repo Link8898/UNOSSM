@@ -109,38 +109,22 @@ public class LoadingController {
     protected void onJoinGame(){
 
         name = namebox.getText();
+        String host = inputbox.getText();
 
         if(!(name.isEmpty() || name.isBlank())){
             Stage stage = (Stage)(startgame.getScene().getWindow());
-
-            try {
-                DatagramSocket socket = new DatagramSocket();
-                String host = inputbox.getText();
-                InetAddress address = InetAddress.getByName(host);
-
-                String msg = "join " + name+" "+ipaddress;
-
-                byte[] buf = msg.getBytes();
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
-                socket.send(packet);
-                System.err.println("joinpacket sent");
 
                 try {
                 FXMLLoader lobbyclient = new FXMLLoader(Application.class.getResource("lobbyclient.fxml"));
                 Parent root = lobbyclient.load();
                 LCController controller = lobbyclient.getController();
 
-                controller.startupPing(name, controller);
+                controller.startupPing(name, controller, host);
                 stage.setScene(new Scene(root));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            } catch (SocketException | UnknownHostException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
 
 

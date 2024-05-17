@@ -25,7 +25,6 @@ public class LCListener extends Thread {
     }
 
     public void run(){
-        System.err.println("LCLISTENER RUNNING");
         boolean waiting = true;
 
         try {

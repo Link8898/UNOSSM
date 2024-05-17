@@ -42,7 +42,7 @@ public class LCController {
     }
 
 
-    public void startupPing(String name, LCController controller){
+    public void startupPing(String name, LCController controller, String host){
         this.name = name;
 
         LCListener listener = new LCListener(controller);
@@ -51,9 +51,10 @@ public class LCController {
 
             try {
                 DatagramSocket socket = new DatagramSocket();
-                InetAddress address = InetAddress.getByName("localhost");
+                InetAddress address = InetAddress.getByName(host);
 
                 String msg = "join " + name + " " + ipaddress;
+                System.out.println(msg);
 
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
