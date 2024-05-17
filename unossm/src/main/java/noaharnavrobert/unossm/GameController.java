@@ -16,6 +16,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class GameController {
@@ -39,7 +40,7 @@ public class GameController {
 
     private void RenderHand() {
         // Now fix positioning of the cards (space out based on cards.length or something)
-        container.getChildren().clear(); // Clear the previous hand
+        container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
         cards = new ArrayList<Button>();
         ArrayList<String> cardData = logic.GetHand(id); // FETCHING DATA
         for (int index = 0; index < cardData.size(); index++) {
