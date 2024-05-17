@@ -44,6 +44,7 @@ public class LCController {
 
     public void startupPing(String name, LCController controller, String host){
         this.name = name;
+        serveraddress = host;
 
         LCListener listener = new LCListener(controller);
         listener.start();
@@ -88,21 +89,29 @@ public class LCController {
     }
 
 
-    // when startgame is pressed
-    @FXML
     protected void startGame(){
-
+        System.out.println("I was called to start the game");
         try {
             FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
             Scene scene = new Scene(game.load(), 500, 500);
-            Stage stage = (Stage) ip.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            System.out.println("Now stage");
+            Runnable task = () -> {
+                Platform.runLater(() -> {
+                    Stage stage = (Stage)(ip.getScene().getWindow());
+                    stage.setScene(scene);
+                    stage.show();
+                });
+            };
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+            GameController gameController = game.getController();
+            gameController.Connect(serveraddress);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        System.out.println("Game should have started");
 
     }
 

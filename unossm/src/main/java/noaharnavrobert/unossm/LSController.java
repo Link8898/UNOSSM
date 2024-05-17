@@ -119,7 +119,7 @@ public class LSController {
         try {
             FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
             Scene scene = new Scene(game.load(), 500, 500);
-            Stage stage = (Stage) ip.getScene().getWindow();
+            Stage stage = (Stage)(ip.getScene().getWindow());
             stage.setScene(scene);
             stage.show();
 

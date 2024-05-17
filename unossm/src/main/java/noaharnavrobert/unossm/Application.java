@@ -23,7 +23,7 @@ public class Application extends javafx.application.Application {
         String musicFile = "Lobby.mp3";
         Media sound = new Media(new File(musicFile).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
+        // mediaPlayer.play();
     }
 
     public static void main(String[] args) {

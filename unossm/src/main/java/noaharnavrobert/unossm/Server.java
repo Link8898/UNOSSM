@@ -55,7 +55,6 @@ public class Server extends Thread {
                         throw new RuntimeException(e);
                     }
 
-
                     socket.close();
                     waiting = false;
                     running = true;
@@ -123,29 +122,7 @@ public class Server extends Thread {
 
     public void game(){
         Logic logic = new Logic(players.size());
-        DatagramSocket socket = null;
-        try {
-            socket = new DatagramSocket(1234);
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        }
 
-        int counter = 0;
-        for(String ip : playerips) {
-
-            String msg = "game "+players.get(counter)+" "+playerips.get(counter);
-            byte[] buf = msg.getBytes();
-
-            try {
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(ip), 1234);
-                socket.send(packet);
-            } catch (UnknownHostException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            counter++;
-        }
 
     }
 }
