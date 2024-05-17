@@ -91,18 +91,14 @@ public class GameController {
             playedcard.setStyle(style);
         }
     }
-
-<<<<<<< Updated upstream
+    
     @FXML
     protected void onDrawButtonClick(){
         logic.DrawCard(id);
         RenderHand();
     }
 
-    public void Connect(String serverIP) {
-=======
     public void Connect(String clientIP, String serverIP) {
->>>>>>> Stashed changes
         Runnable task = () -> {
             Platform.runLater(() -> {
                 GameListener listener = new GameListener(serverIP);
