@@ -37,7 +37,7 @@ public class GameListener extends Thread{
     public ArrayList<String> GetHand(int id) {
         ArrayList<String> hand = new ArrayList<String>();
 
-        out.println("gethand");
+        out.println("gethand "+id);
 
         try {
             String response = in.readLine();
@@ -49,8 +49,6 @@ public class GameListener extends Thread{
 
         return hand;
     }
-
-    public voi
 
 
 }

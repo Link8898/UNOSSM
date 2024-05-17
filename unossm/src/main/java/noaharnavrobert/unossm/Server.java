@@ -136,9 +136,13 @@ public class Server extends Thread {
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
                 String msg = in.readLine();
-                System.out.println("Client says: "+msg);
+                String[] split_msg = msg.split(" ");
+                if(split_msg[0].equals("gethand")){
+                    int index = Integer.parseInt(split_msg[1]);
+                    out.println(logic.GetHand(index).toString());
+                }
 
-                out.println("True, Noah really does suck!!!");
+                //out.println("True, Noah really does suck!!!");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
