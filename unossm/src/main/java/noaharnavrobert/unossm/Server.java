@@ -128,18 +128,17 @@ public class Server extends Thread {
             ServerSocket serverSocket = new ServerSocket(1234);
             System.out.println("TCP Listening on port 1234");
             while(running) {
-                Socket socket = serverSocket.accept();
-
+                Socket clientSocket = serverSocket.accept();
                 System.out.println("Client connected!");
 
-                InputStream input = socket.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 
-                OutputStream output = socket.getOutputStream();
-                PrintWriter writer = new PrintWriter(output, true);
-                
-                String text = reader.readLine();
-                System.out.println(text);
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+                String msg = in.readLine();
+                System.out.println("Client says: "+msg);
+
+                out.println("True, Noah really does suck!!!");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
