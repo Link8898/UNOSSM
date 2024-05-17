@@ -77,7 +77,8 @@ public class GameController {
         }
         // Render the most recently played card
         System.err.println("1");
-        String currentCard = listener.GetCurrent();
+        //String currentCard = listener.GetCurrent();
+        String currentCard = "g4";
         System.err.println(currentCard);
         System.err.println("2");
         if (currentCard.equals("NONE")) {
