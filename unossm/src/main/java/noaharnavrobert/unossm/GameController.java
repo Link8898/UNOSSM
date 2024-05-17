@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 public class GameController {
 
     // Identity
-    private final int id = 0;
+    private int id = 0;
 
     // Player's Hand of Cards
     private ArrayList<String> hand;
@@ -91,7 +91,7 @@ public class GameController {
             playedcard.setStyle(style);
         }
     }
-    
+
     @FXML
     protected void onDrawButtonClick(){
         logic.DrawCard(id);
@@ -103,7 +103,7 @@ public class GameController {
             Platform.runLater(() -> {
                 GameListener listener = new GameListener(serverIP);
                 listener.start();
-                id = GetID(clientIP);
+                id = listener.GetID(clientIP);
                 RenderHand();
                 sound = new Media(new File("src/main/resources/sounds/game.mp3").toURI().toString());
                 MediaPlayer mediaPlayer = new MediaPlayer(sound);
