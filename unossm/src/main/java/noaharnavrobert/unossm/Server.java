@@ -125,7 +125,7 @@ public class Server extends Thread {
     public void game(){
         logic = new Logic(players.size());
         try {
-            ServerSocket serverSocket = new ServerSocket(5678);
+            ServerSocket serverSocket = new ServerSocket(1234);
             System.out.println("TCP Listening on port 1234");
             while(running) {
                 Socket clientSocket = serverSocket.accept();
@@ -142,10 +142,7 @@ public class Server extends Thread {
                     out.println(logic.GetHand(index).toString());
                 } else if(split_msg[0].equals("getcurrent")){
                     out.println(logic.CurrentCard());
-                } else if (split_msg[0].equals("GetID")) {
-                    int id = playerips.indexOf(split_msg[1]);
-                    out.println(id);
-                }
+                } 
 
                 //out.println("True, Noah really does suck!!!");
             }

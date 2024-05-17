@@ -18,7 +18,7 @@ public class GameListener extends Thread{
 
     public void run() {
         try {
-            socket = new Socket(serveraddress, 5678);
+            socket = new Socket(serveraddress, 1234);
 
              out = new PrintWriter(socket.getOutputStream(), true);
 
@@ -65,16 +65,4 @@ public class GameListener extends Thread{
         return card;
     }
 
-    public int GetID(String ipaddress) {
-        int id = 0;
-
-        out.println("getid "+ ipaddress);
-
-        try {
-            id = Integer.parseInt(in.readLine());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return id;
-    }
 }
