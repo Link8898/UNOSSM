@@ -15,7 +15,6 @@ public class GameListener extends Thread{
     }
 
     public void run() {
-
         try {
             Socket socket = new Socket(serveraddress, 1234);
 
@@ -29,6 +28,9 @@ public class GameListener extends Thread{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void GetHand(int id) {
 
     }
 
