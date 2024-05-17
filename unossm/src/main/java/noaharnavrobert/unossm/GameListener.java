@@ -51,5 +51,7 @@ public class GameListener extends Thread{
         return hand;
     }
 
-
+    public void GetCurrent() {
+        
+    }
 }
