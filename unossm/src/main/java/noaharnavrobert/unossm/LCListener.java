@@ -47,6 +47,7 @@ public class LCListener extends Thread {
                     String[] nameArray = playerNames.split(",");
                     players = new ArrayList<>(Arrays.asList(nameArray));
                     controller.playersUpdate(players);
+                    System.err.println("called playersUpdate");
 
                 } else if (received.split(" ")[0].equals("start")) {
                     System.err.println("received start");
