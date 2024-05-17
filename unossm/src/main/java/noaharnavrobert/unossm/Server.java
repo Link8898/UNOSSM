@@ -127,23 +127,25 @@ public class Server extends Thread {
         try {
             ServerSocket serverSocket = new ServerSocket(1234);
             System.out.println("TCP Listening on port 1234");
+            int counter = 0;
             while(running) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected!");
-
+                    Socket clientSocket = serverSocket.accept();
+                    System.out.println("Client connected!");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
                 String msg = in.readLine();
+                System.err.println("MSG: "+msg);
                 String[] split_msg = msg.split(" ");
+                int id = playerips.indexOf(split_msg[1]);
                 if(split_msg[0].equals("gethand")){
-                    int id = playerips.indexOf(split_msg[1]);
                     out.println(logic.GetHand(id).toString());
                 } else if(msg.equals("getcurrent")){
-                    System.err.println("here");
                     out.println(logic.CurrentCard());
-                } 
+                } else if (split_msg[0].equals("drawcard")) {
+                    logic.DrawCard(id);
+                }
 
                 //out.println("True, Noah really does suck!!!");
             }

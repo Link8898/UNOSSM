@@ -73,4 +73,9 @@ public class GameListener extends Thread{
         return card;
     }
 
+    public void DrawCard(String ip) {
+        out.println("drawcard "+ip);
+
+    }
+
 }
