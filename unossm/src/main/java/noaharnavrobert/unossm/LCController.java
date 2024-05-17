@@ -94,9 +94,16 @@ public class LCController {
             FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
             Scene scene = new Scene(game.load(), 500, 500);
             System.out.println("Now stage");
-            Stage stage = (Stage)(ip.getScene().getWindow());
-            stage.setScene(scene);
-            stage.show();
+            Runnable task = () -> {
+                Platform.runLater(() -> {
+                    Stage stage = (Stage)(ip.getScene().getWindow());
+                    stage.setScene(scene);
+                    stage.show();
+                });
+            };
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
