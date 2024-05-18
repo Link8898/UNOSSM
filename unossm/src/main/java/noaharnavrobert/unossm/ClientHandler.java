@@ -5,10 +5,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class ClientHandler extends Thread {
 
-    private Socket s;
+    private Socket socket;
     private DataInputStream dis;
     private DataOutputStream dos;
     private Logic logic;
@@ -17,7 +18,10 @@ class ClientHandler extends Thread {
 
     // Constructor
     public ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos, Logic logic, ArrayList<String> players, ArrayList<String> playerips) {
-        this.s = s;
+        Scanner scanner = new Scanner(System.in);
+        this.socket = s;
+        System.err.println(socket.isClosed());
+        scanner.nextLine();
         this.dis = dis;
         this.dos = dos;
         this.logic = logic;
@@ -27,6 +31,7 @@ class ClientHandler extends Thread {
 
     @Override
     public void run() {
+
         String received;
         String toreturn;
         while (true) {
@@ -38,9 +43,9 @@ class ClientHandler extends Thread {
                 String userIP = receivedArray[1];
                 int id = playerips.indexOf(userIP);
                 if (receivedArray[0].equals("Exit")) {
-                    System.out.println("Client " + this.s + " sends exit...");
+                    System.out.println("Client " + socket + " sends exit...");
                     System.out.println("Closing this connection.");
-                    this.s.close();
+                    socket.close();
                     System.out.println("Connection closed");
                     break;
                 }

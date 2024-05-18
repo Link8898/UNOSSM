@@ -8,16 +8,16 @@ import java.util.Arrays;
 public class GameListener extends Thread {
     String serverIP;
     Socket socket;
-    PrintWriter out;
-    BufferedReader in;
+    DataInputStream dis;
+    DataOutputStream dos;
 
     public GameListener(String server) {
         serverIP = server;
         System.err.println(server);
         try {
             socket = new Socket(serverIP, 1234);
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             dis = new DataInputStream(socket.getInputStream());
+             dos = new DataOutputStream(socket.getOutputStream());
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -30,16 +30,15 @@ public class GameListener extends Thread {
 
     public ArrayList<String> GetHand(String ip) {
         ArrayList<String> hand = new ArrayList<String>();
+
         try {
-            out = new PrintWriter(socket.getOutputStream(), true);
+            dos.writeUTF("getHand " + ip);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        out.println("getHand " + ip);
-
         try {
-            String res = in.readLine();
+            String res = dis.readUTF();
             res = res.substring(1, res.length() - 1);
             hand = new ArrayList<String>(Arrays.asList(res.split(", ")));
 
@@ -52,10 +51,14 @@ public class GameListener extends Thread {
 
     public String GetCurrent() {
         String card = "";
-        out.println("getCurrent");
+        try {
+            dos.writeUTF("getCurrent");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
-            card = in.readLine();
+            card = dis.readUTF();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -64,7 +67,11 @@ public class GameListener extends Thread {
     }
 
     public void DrawCard(String ip) {
-        out.println("drawCard "+ip);
+        try {
+            dos.writeUTF("drawCard "+ip);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
