@@ -35,7 +35,6 @@ public class LSController {
     private Label ip;
 
     private String ipaddress;
-    private String serveraddress;
     private String name;
 
 
@@ -124,7 +123,7 @@ public class LSController {
             stage.show();
 
             GameController gameController = game.getController();
-            gameController.Connect(ipaddress, serveraddress);
+            gameController.Connect(ipaddress, ipaddress);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
