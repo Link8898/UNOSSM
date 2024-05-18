@@ -13,11 +13,10 @@ public class GameListener extends Thread {
 
     public GameListener(String server) {
         serverIP = server;
-        System.err.println(server);
         try {
             socket = new Socket(serverIP, 1234);
-             dis = new DataInputStream(socket.getInputStream());
-             dos = new DataOutputStream(socket.getOutputStream());
+            dis = new DataInputStream(socket.getInputStream());
+            dos = new DataOutputStream(socket.getOutputStream());
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -52,7 +51,9 @@ public class GameListener extends Thread {
     public String GetCurrent() {
         String card = "";
         try {
+            System.out.println("Requesting current card");
             dos.writeUTF("getCurrent");
+            System.out.println("Received current card");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
