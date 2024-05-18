@@ -5,31 +5,20 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GameListener extends Thread{
-
-    String serveraddress;
+public class GameListener extends Thread {
+    String serverIP;
     Socket socket;
     PrintWriter out;
     BufferedReader in;
 
-    public GameListener(String server){
-
-        serveraddress = server;
-
-                try {
-            socket = new Socket(serveraddress, 1234);
-
-             out = new PrintWriter(socket.getOutputStream(), true);
-
-             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            //out.println("gethand");
-
-            //String response = in.readLine();
-            //System.out.println("Server says: "+response);
-
-
-        } catch (IOException e) {
+    public GameListener(String server) {
+        serverIP = server;
+        try {
+            socket = new Socket(serverIP, 1234);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -46,7 +35,7 @@ public class GameListener extends Thread{
             throw new RuntimeException(e);
         }
 
-        out.println("gethand "+ip);
+        out.println("getHand " + ip);
 
         try {
             String res = in.readLine();
@@ -62,7 +51,7 @@ public class GameListener extends Thread{
 
     public String GetCurrent() {
         String card = "";
-        out.println("getcurrent");
+        out.println("getCurrent");
 
         try {
             card = in.readLine();
@@ -74,7 +63,7 @@ public class GameListener extends Thread{
     }
 
     public void DrawCard(String ip) {
-        out.println("drawcard "+ip);
+        out.println("drawCard "+ip);
 
     }
 
