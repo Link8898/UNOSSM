@@ -126,14 +126,17 @@ public class Server extends Thread {
         logic = new Logic(players.size());
         try {
             ServerSocket serverSocket = new ServerSocket(1234);
-            System.out.println("TCP Listening on port 1234");
-            int counter = 0;
-            while(running) {
-                    Socket clientSocket = serverSocket.accept();
+            System.out.println("Server");
+             Socket clientSocket = serverSocket.accept();
                     System.out.println("Client connected!");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+
+            int counter = 0;
+            while(running) {
+
 
                 String msg = in.readLine();
                 System.err.println("MSG: "+msg);
