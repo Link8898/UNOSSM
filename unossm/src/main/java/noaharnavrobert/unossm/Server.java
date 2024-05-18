@@ -124,37 +124,6 @@ public class Server extends Thread {
 
     public void game(){
         logic = new Logic(players.size());
-        try {
-            ServerSocket serverSocket = new ServerSocket(1234);
-            System.out.println("Server");
-             Socket clientSocket = serverSocket.accept();
-                    System.out.println("Client connected!");
-
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-
-
-            int counter = 0;
-            while(running) {
-
-
-                String msg = in.readLine();
-                System.err.println("MSG: "+msg);
-                String[] split_msg = msg.split(" ");
-                int id = playerips.indexOf(split_msg[1]);
-                if(split_msg[0].equals("gethand")){
-                    out.println(logic.GetHand(id).toString());
-                } else if(msg.equals("getcurrent")){
-                    out.println(logic.CurrentCard());
-                } else if (split_msg[0].equals("drawcard")) {
-                    logic.DrawCard(id);
-                }
-
-                //out.println("True, Noah really does suck!!!");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        TCPServer tcpserver = new TCPServer(logic, players, playerips);
     }
 }

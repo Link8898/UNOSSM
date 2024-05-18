@@ -13,6 +13,7 @@ public class GameListener extends Thread {
 
     public GameListener(String server) {
         serverIP = server;
+        System.err.println(server);
         try {
             socket = new Socket(serverIP, 1234);
             out = new PrintWriter(socket.getOutputStream(), true);

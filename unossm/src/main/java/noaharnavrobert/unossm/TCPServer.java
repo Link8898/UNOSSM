@@ -6,10 +6,22 @@ import java.util.*;
 import java.net.*;
 
 // Server class
-public class TCPServer
-{
-    public static void main(String[] args) throws IOException
+public class TCPServer {
+
+    private Logic logic;
+    private ArrayList<String> players;
+    private ArrayList<String> playerips;
+
+    public TCPServer(Logic logic, ArrayList<String> players, ArrayList<String> playerips){
+        this.logic = logic;
+        this.players = players;
+        this.playerips = playerips;
+
+    }
+
+    public void run() throws IOException
     {
+
         // server is listening on port 5056
         ServerSocket ss = new ServerSocket(1234);
 
@@ -33,7 +45,7 @@ public class TCPServer
                 System.out.println("Assigning new thread for this client");
 
                 // create a new thread object
-                Thread t = new ClientHandler(s, dis, dos);
+                Thread t = new ClientHandler(s, dis, dos, logic, players, playerips);
 
                 // Invoking the start() method
                 t.start();
