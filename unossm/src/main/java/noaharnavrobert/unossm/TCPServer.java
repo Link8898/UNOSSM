@@ -63,7 +63,7 @@ public class TCPServer {
                 t.start();
                 scanner.nextLine();
                 System.err.println("Created new thread for this client");
-                System.err.println(counter);
+                System.err.println("Current iteration through creating client: "+counter);
                 counter++;
 
 
@@ -73,4 +73,77 @@ public class TCPServer {
             }
         }
     }
+
+    class ClientHandler extends Thread {
+
+    private Socket socket;
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    private Logic logic;
+    private ArrayList<String> players;
+    private ArrayList<String> playerips;
+    public Scanner scanner = new Scanner(System.in);
+
+
+    // Constructor
+    public ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos, Logic logic, ArrayList<String> players, ArrayList<String> playerips) {
+        this.socket = s;
+        System.err.println(socket.isClosed());
+        scanner.nextLine();
+        this.dis = dis;
+        this.dos = dos;
+        this.logic = logic;
+        this.players = players;
+        this.playerips = playerips;
+    }
+
+    @Override
+    public void run() {
+
+        String received;
+        String toreturn;
+        while (true) {
+            try {
+
+                // receive the answer from client
+                System.out.println(socket.isClosed());
+                received = dis.readUTF();
+                socket.isClosed();
+                System.out.println(socket.isClosed());
+                System.err.println("Received: " + received);
+                String[] receivedArray = received.split(" ");
+                String userIP = receivedArray[1];
+                int id = playerips.indexOf(userIP);
+
+                // write on output stream based on the
+                // answer from the client
+                switch (receivedArray[0]) {
+
+                    case "getHand":
+
+                        toreturn = logic.GetHand(id).toString();
+                        System.out.println(socket.isClosed());
+                        dos.writeUTF(toreturn);
+                        scanner.nextLine();
+                        System.out.println("sent hand");
+                        break;
+
+                    case "getCurrent":
+                        toreturn = logic.CurrentCard();
+                        dos.writeUTF(toreturn);
+                        System.out.println("sent current card");
+                        break;
+
+                    default:
+                        dos.writeUTF("Invalid input");
+                        break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
 
