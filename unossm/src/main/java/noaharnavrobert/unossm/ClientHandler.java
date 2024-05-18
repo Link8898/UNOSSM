@@ -31,9 +31,9 @@ class ClientHandler extends Thread {
         String toreturn;
         while (true) {
             try {
-
                 // receive the answer from client
                 received = dis.readUTF();
+                System.err.println("Received: " + received);
                 String[] receivedArray = received.split(" ");
                 String userIP = receivedArray[1];
                 int id = playerips.indexOf(userIP);

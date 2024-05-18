@@ -19,15 +19,17 @@ public class TCPServer {
 
     }
 
-    public void run() throws IOException
+    public void run()
     {
+        ServerSocket ss = null;
+        try {
+            ss = new ServerSocket(1234);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        // server is listening on port 5056
-        ServerSocket ss = new ServerSocket(1234);
-
-        // running infinite loop for getting
-        // client request
-        while (true)
+        int counter = 0;
+        while (counter < players.size())
         {
             Socket s = null;
 
@@ -46,13 +48,19 @@ public class TCPServer {
 
                 // create a new thread object
                 Thread t = new ClientHandler(s, dis, dos, logic, players, playerips);
-
                 // Invoking the start() method
                 t.start();
+                System.err.println("Created new thread for this client");
+                System.err.println(counter);
+                counter++;
 
             }
             catch (Exception e){
-                s.close();
+                try {
+                    s.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 e.printStackTrace();
             }
         }
