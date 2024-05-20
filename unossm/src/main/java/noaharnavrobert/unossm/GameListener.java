@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class GameListener extends Thread {
     String serverIP;
@@ -13,9 +14,11 @@ public class GameListener extends Thread {
 
     public GameListener(String server) {
         serverIP = server;
-        System.err.println(server);
         try {
             socket = new Socket(serverIP, 1234);
+            System.err.println("Connected to " + serverIP);
+            System.out.println(socket.isClosed());
+
              dis = new DataInputStream(socket.getInputStream());
              dos = new DataOutputStream(socket.getOutputStream());
         }
@@ -25,6 +28,7 @@ public class GameListener extends Thread {
     }
 
     public void run() {
+
 
     }
 

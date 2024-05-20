@@ -125,6 +125,7 @@ public class Server extends Thread {
     public void game(){
         logic = new Logic(players.size());
         TCPServer tcpserver = new TCPServer(logic, players, playerips);
+        tcpserver.run();
 
     }
 }
