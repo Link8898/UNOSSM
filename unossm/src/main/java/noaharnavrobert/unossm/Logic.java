@@ -70,6 +70,10 @@ public class Logic {
         }
     }
 
+    public void GameOver() {
+        turn = -1;
+    }
+
     public ArrayList<String> GetHand(int id) { // Get the hand corresponding to the id
         return hands.get(id);
     }
