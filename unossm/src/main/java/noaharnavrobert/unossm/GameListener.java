@@ -48,11 +48,11 @@ public class GameListener extends Thread {
         return hand;
     }
 
-    public String GetCurrent() {
+    public String GetCurrent(String ip) {
         String card = "";
         try {
             System.out.println("Requesting current card");
-            dos.writeUTF("getCurrent");
+            dos.writeUTF("getCurrent " + ip);
             System.out.println("Received current card");
         } catch (IOException e) {
             throw new RuntimeException(e);

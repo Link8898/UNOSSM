@@ -75,7 +75,7 @@ public class GameController {
             container.getChildren().add(card);
         }
         // Render the most recently played card
-        String currentCard = listener.GetCurrent();
+        String currentCard = listener.GetCurrent(ip);
         if (currentCard.equals("NONE")) {
             String style = "-fx-background-color: " + "gray" + "; -fx-text-fill: black; -fx-font-size: 200%;";
             playedcard.setText("");
