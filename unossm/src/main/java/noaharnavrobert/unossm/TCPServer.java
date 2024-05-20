@@ -44,7 +44,6 @@ public class TCPServer {
                 t.start();
 
                 System.err.println("Created new thread for this client");
-                System.err.println("Current iteration through creating client: " + counter);
                 counter++;
             }
         } catch(IOException e){
@@ -66,7 +65,6 @@ public class TCPServer {
         // Constructor
         public ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos, Logic logic, ArrayList<String> players, ArrayList<String> playerips) {
             this.socket = s;
-            System.err.println(socket.isClosed());
             this.dis = dis;
             this.dos = dos;
             this.logic = logic;
@@ -83,10 +81,7 @@ public class TCPServer {
                 try {
 
                     // receive the answer from client
-                    System.out.println(socket.isClosed());
                     received = dis.readUTF();
-                    socket.isClosed();
-                    System.out.println(socket.isClosed());
                     System.err.println("Received: " + received);
                     String[] receivedArray = received.split(" ");
                     String userIP = receivedArray[1];
@@ -99,16 +94,18 @@ public class TCPServer {
                         case "getHand":
 
                             toreturn = logic.GetHand(id).toString();
-                            System.out.println(socket.isClosed());
                             dos.writeUTF(toreturn);
-                            System.out.println("sent hand");
                             break;
 
                         case "getCurrent":
                             toreturn = logic.CurrentCard();
                             dos.writeUTF(toreturn);
-                            System.out.println("sent current card");
                             break;
+
+                        case "playCard":
+                            int cardIndex = Integer.parseInt(receivedArray[2]);
+                            String card = logic.GetHand(id).get(cardIndex);
+                            logic.PlayCard(id, cardIndex);
 
                         default:
                             dos.writeUTF("Invalid input");
