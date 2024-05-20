@@ -12,12 +12,11 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.DataOutputStream;
 import java.io.File;
 
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
+import java.io.IOException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -34,14 +33,13 @@ public class GameController {
     // Styling
     private final int margin = 60;
     private GameListener listener;
+    private Socket socket;
+    private DataOutputStream dos;
     private Media sound;
 
-    private void RenderHand() {
+    protected void RenderHand(ArrayList<String> cardData, String currentCard) {
         container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
         cards = new ArrayList<Button>();
-        System.out.println("Requesting hand from server");
-        ArrayList<String> cardData = listener.GetHand(ip); // FETCHING DATA
-        System.out.println("Received hand from server");
         for (int index = 0; index < cardData.size(); index++) {
             // Create and style the card
             Button card = new Button();
@@ -62,8 +60,12 @@ public class GameController {
             EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    listener.PlayCard(ip, cards.indexOf(card));
-                    RenderHand();
+                    try {
+                        dos.writeUTF("playCard " + ip + " " + cards.indexOf(card));
+                        GetHand();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             };
             card.setOnAction(event);
@@ -75,7 +77,6 @@ public class GameController {
             container.getChildren().add(card);
         }
         // Render the most recently played card
-        String currentCard = listener.GetCurrent(ip);
         if (currentCard.equals("NONE")) {
             String style = "-fx-background-color: " + "gray" + "; -fx-text-fill: black; -fx-font-size: 200%;";
             playedcard.setText("");
@@ -94,17 +95,37 @@ public class GameController {
 
     @FXML
     protected void onDrawButtonClick() {
-        listener.DrawCard(ip);
-        RenderHand();
+        try {
+            dos.writeUTF("drawCard " + ip);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        GetHand();
+    }
+
+    private void GetHand() { // Ask the server for hand data
+        try {
+            dos.writeUTF("getHand " + ip);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void Connect(String clientIP, String serverIP) {
         Runnable task = () -> {
             Platform.runLater(() -> {
-                listener = new GameListener(serverIP);
+                try {
+                    socket = new Socket(serverIP, 1234);
+                    System.err.println("Connected to " + serverIP);
+                    dos = new DataOutputStream(socket.getOutputStream());
+                }
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                listener = new GameListener(socket, this);
                 listener.start();
                 ip = clientIP;
-                RenderHand();
+                GetHand();
                 sound = new Media(new File("src/main/resources/sounds/game.mp3").toURI().toString());
                 MediaPlayer mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.play();
