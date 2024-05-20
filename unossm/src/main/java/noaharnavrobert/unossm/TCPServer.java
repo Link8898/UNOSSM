@@ -97,7 +97,7 @@ public class TCPServer {
 
                     // write on output stream based on the
                     // answer from the client
-                    toreturn = logic.getTurn() + " " +logic.GetHand(id) + " " + logic.CurrentCard();
+                    toreturn = players.get(logic.getTurn()) + " " +logic.GetHand(id) + " " + logic.CurrentCard();
                     switch (receivedArray[0]) {
 
                         case "getHand":
@@ -114,7 +114,7 @@ public class TCPServer {
                             lock.lock();
                             for(Socket socket : sockets) {
                                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                                toreturn = logic.getTurn() + " " + logic.GetHand((Integer) socketid.get(socket)) + " " + logic.CurrentCard() + " "+logic.getTurn();
+                                toreturn = players.get(logic.getTurn()) + " " + logic.GetHand((Integer) socketid.get(socket)) + " " + logic.CurrentCard() + " "+logic.getTurn();
                                 dos.writeUTF(toreturn);
                             }
                             lock.unlock();
