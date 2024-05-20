@@ -35,7 +35,6 @@ public class LSListener extends Thread {
 
                 byte[] data = Arrays.copyOf(packet.getData(), packet.getLength());
                 String received = new String( data);
-                System.out.println("received " + received);
 
                 if (received.split(" ")[0].equals("joined")) {
                     serveraddress = String.valueOf(packet.getAddress());
