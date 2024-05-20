@@ -94,6 +94,7 @@ public class TCPServer {
                         case "getHand":
 
                             toreturn = logic.GetHand(id).toString();
+                            System.err.println(toreturn);
                             dos.writeUTF(toreturn);
                             break;
 
@@ -104,7 +105,6 @@ public class TCPServer {
 
                         case "playCard":
                             int cardIndex = Integer.parseInt(receivedArray[2]);
-                            String card = logic.GetHand(id).get(cardIndex);
                             logic.PlayCard(id, cardIndex);
 
                         default:
