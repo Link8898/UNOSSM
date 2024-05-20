@@ -16,6 +16,7 @@ public class TCPServer {
     private ArrayList<String> playerips;
     private ArrayList<Socket> sockets;
     private HashMap socketid;
+    String winner;
 
     public TCPServer(Logic logic, ArrayList<String> players, ArrayList<String> playerips){
         this.logic = logic;
@@ -23,6 +24,7 @@ public class TCPServer {
         this.playerips = playerips;
         sockets = new ArrayList<>();
         socketid = new HashMap<Socket, Integer>();
+        winner = "";
 
     }
 
@@ -114,15 +116,30 @@ public class TCPServer {
                             lock.lock();
                             for(Socket socket : sockets) {
                                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                                toreturn = players.get(logic.getTurn()) + " " + logic.GetHand((Integer) socketid.get(socket)) + " " + logic.CurrentCard() + " "+logic.getTurn();
+                                toreturn = players.get(logic.getTurn()) + " " + logic.GetHand((Integer) socketid.get(socket)) + " " + logic.CurrentCard();
+                                if(logic.GetHand((Integer) socketid.get(socket)).size() == 0) {
+                                    logic.GameOver();
+                                    winner = players.get(logic.getTurn());
+                                    break;
+                                }
                                 dos.writeUTF(toreturn);
                             }
                             lock.unlock();
-
-
                         default:
                             break;
+
                     }
+                    lock.lock();
+                    if(!(winner.isEmpty())) {
+                        for(Socket socket : sockets) {
+                                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                                toreturn = players.get(logic.getTurn()) + " wins! " + logic.GetHand((Integer) socketid.get(socket)) + " " + logic.CurrentCard();
+                                dos.writeUTF(toreturn);
+                            }
+                    }
+                    lock.unlock();
+                    running = false;
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     running = false;
