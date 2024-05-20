@@ -37,7 +37,6 @@ public class Server extends Thread {
                 socket.receive(packet);
                 byte[] data = Arrays.copyOf(packet.getData(), packet.getLength());
                 String received = new String(data);
-                System.out.println(received);
                 if(received.split(" ")[0].equals("join")){
                     newPLayer(received);
                 } else if (received.split(" ")[0].equals("start")) {
@@ -77,8 +76,6 @@ public class Server extends Thread {
         try {
             DatagramSocket socket = new DatagramSocket();
             String msg = "players "+players.toString();
-            System.out.println(msg);
-            System.out.println(players);
 
             byte[] buf = msg.getBytes();
 

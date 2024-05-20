@@ -1,9 +1,12 @@
 package noaharnavrobert.unossm;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.text.*;
 import java.util.*;
 import java.net.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 // Server class
 public class TCPServer {
@@ -11,12 +14,13 @@ public class TCPServer {
     private Logic logic;
     private ArrayList<String> players;
     private ArrayList<String> playerips;
-    private Scanner scanner = new Scanner(System.in);
+    private ArrayList<DataOutputStream> sockets;
 
     public TCPServer(Logic logic, ArrayList<String> players, ArrayList<String> playerips){
         this.logic = logic;
         this.players = players;
         this.playerips = playerips;
+        sockets = new ArrayList<>();
 
     }
 
@@ -24,7 +28,6 @@ public class TCPServer {
         try {
             ServerSocket serverSocket = null;
             serverSocket = new ServerSocket(1234);
-            System.err.println("listening on port 1234");
             int counter = 0;
             while (counter < players.size()) {
                 Socket socket = null;
@@ -32,18 +35,17 @@ public class TCPServer {
                 // socket object to receive incoming client requests
                 socket = serverSocket.accept();
 
-                System.out.println("A new client is connected : " + socket);
 
                 // obtaining input and out streams
                 DataInputStream dis = new DataInputStream(socket.getInputStream());
                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
                 // create a new thread object
+                sockets.add(dos);
                 Thread t = new ClientHandler(socket, dis, dos, logic, players, playerips);
                 // Invoking the start() method
                 t.start();
 
-                System.err.println("Created new thread for this client");
                 counter++;
             }
         } catch(IOException e){
@@ -58,8 +60,8 @@ public class TCPServer {
         private DataOutputStream dos;
         private Logic logic;
         private ArrayList<String> players;
+        private Lock lock;
         private ArrayList<String> playerips;
-        public Scanner scanner = new Scanner(System.in);
 
 
         // Constructor
@@ -70,6 +72,7 @@ public class TCPServer {
             this.logic = logic;
             this.players = players;
             this.playerips = playerips;
+            lock = new ReentrantLock();
         }
 
         @Override
@@ -77,29 +80,23 @@ public class TCPServer {
 
             String received;
             String toreturn;
-            while (true) {
+            boolean running = true;
+            while (running) {
                 try {
 
                     // receive the answer from client
                     received = dis.readUTF();
-                    System.err.println("Received: " + received);
                     String[] receivedArray = received.split(" ");
                     String userIP = receivedArray[1];
                     int id = playerips.indexOf(userIP);
 
                     // write on output stream based on the
                     // answer from the client
+                    System.err.println(receivedArray[0]);
+                    toreturn = logic.CurrentCard() + " "+ logic.CurrentCard();
                     switch (receivedArray[0]) {
 
                         case "getHand":
-
-                            toreturn = logic.GetHand(id).toString();
-                            System.err.println(toreturn);
-                            dos.writeUTF(toreturn);
-                            break;
-
-                        case "getCurrent":
-                            toreturn = logic.CurrentCard();
                             dos.writeUTF(toreturn);
                             break;
 
@@ -107,12 +104,19 @@ public class TCPServer {
                             int cardIndex = Integer.parseInt(receivedArray[2]);
                             logic.PlayCard(id, cardIndex);
 
+                            lock.lock();
+                            for(DataOutputStream socket : sockets) {
+                                socket.writeUTF(toreturn);
+                            }
+                            lock.unlock();
+
+
                         default:
-                            dos.writeUTF("Invalid input");
                             break;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    running = false;
                 }
 
             }
