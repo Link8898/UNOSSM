@@ -74,4 +74,5 @@ public class Logic {
         return hands.get(id);
     }
     public String CurrentCard() { return currentCard; }
+    public int getTurn() { return turn; }
 }

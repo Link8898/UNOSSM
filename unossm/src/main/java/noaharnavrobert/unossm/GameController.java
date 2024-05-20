@@ -45,8 +45,8 @@ public class GameController {
             // Create and style the card
             Button card = new Button();
             card.setText(cardData.get(index).substring(1));
-            if (cardData.get(index).substring(1).equals("T")) { card.setText("+2"); }
-            else if (cardData.get(index).substring(1).equals("F")) { card.setText("+4"); }
+            if (cardData.get(index).charAt(1) == ('T')) { card.setText("+2"); }
+            else if (cardData.get(index).charAt(1) == ('F')) { card.setText("+4"); }
             String color = "red";
             if (cardData.get(index).charAt(0) == 'g') { color = "green"; }
             else if (cardData.get(index).charAt(0) == 'b') { color = "lightblue"; }
