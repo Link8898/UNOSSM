@@ -27,9 +27,9 @@ public class GameController {
     String ip;
     // Player's Hand of Cards
     private ArrayList<String> hand;
-    @FXML
-    private AnchorPane container;
+    @FXML private AnchorPane container;
     @FXML Button playedcard;
+    @FXML Label currentTurn;
     private ArrayList<Button> cards = new ArrayList<Button>();
     // Styling
     private final int margin = 60;
@@ -38,7 +38,8 @@ public class GameController {
     private DataOutputStream dos;
     private Media sound;
 
-    private void Render(ArrayList<String> cardData, String currentCard) {
+    private void Render(String nameData, ArrayList<String> cardData, String currentCard) {
+        currentTurn.setText(nameData); // Set current player's name
         container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
         cards = new ArrayList<Button>();
         for (int index = 0; index < cardData.size(); index++) {
@@ -96,10 +97,10 @@ public class GameController {
         }
     }
 
-    protected void RenderLater(ArrayList<String> cardData, String currentCard) {
+    protected void RenderLater(String nameData, ArrayList<String> cardData, String currentCard) {
         Runnable task = () -> {
             Platform.runLater(() -> {
-                Render(cardData, currentCard);
+                Render(nameData, cardData, currentCard);
             });
         };
         Thread thread = new Thread(task);

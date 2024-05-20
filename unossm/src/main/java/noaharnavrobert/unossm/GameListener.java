@@ -28,10 +28,11 @@ public class GameListener extends Thread {
             try {
                 String res = dis.readUTF();
                 System.out.println(res);
-                String handData = res.substring(1, res.length() - 4);
+                String nameData = res.substring(0, res.indexOf("[") - 1);
+                String handData = res.substring(res.indexOf("["), res.length() - 4);
                 String current = res.substring(res.length() - 2);
                 ArrayList<String> hand = new ArrayList<String>(Arrays.asList(handData.split(", ")));
-                controller.RenderLater(hand, current);
+                controller.RenderLater(nameData, hand, current);
 
             } catch (IOException e) {
                 reading = false;
