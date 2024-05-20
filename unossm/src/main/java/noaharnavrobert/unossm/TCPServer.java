@@ -117,7 +117,7 @@ public class TCPServer {
                             for(Socket socket : sockets) {
                                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
                                 toreturn = players.get(logic.getTurn()) + " " + logic.GetHand((Integer) socketid.get(socket)) + " " + logic.CurrentCard();
-                                if(logic.GetHand((Integer) socketid.get(socket)).size() == 0) {
+                                if(logic.GetHand((Integer) socketid.get(socket)).isEmpty()) {
                                     logic.GameOver();
                                     winner = players.get(logic.getTurn());
                                     break;
@@ -131,6 +131,7 @@ public class TCPServer {
                     }
                     lock.lock();
                     if(!(winner.isEmpty())) {
+                        System.err.println("Game over: " + winner);
                         for(Socket socket : sockets) {
                                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
                                 toreturn = players.get(logic.getTurn()) + " wins! " + logic.GetHand((Integer) socketid.get(socket)) + " " + logic.CurrentCard();
@@ -138,7 +139,6 @@ public class TCPServer {
                             }
                     }
                     lock.unlock();
-                    running = false;
 
                 } catch (IOException e) {
                     e.printStackTrace();
