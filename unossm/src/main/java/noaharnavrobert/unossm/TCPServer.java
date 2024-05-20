@@ -93,7 +93,7 @@ public class TCPServer {
                     // write on output stream based on the
                     // answer from the client
                     System.err.println(receivedArray[0]);
-                    toreturn = logic.CurrentCard() + " "+ logic.CurrentCard();
+                    toreturn = logic.GetHand(id) + " " + logic.CurrentCard();
                     switch (receivedArray[0]) {
 
                         case "getHand":
