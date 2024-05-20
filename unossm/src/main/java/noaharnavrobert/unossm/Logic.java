@@ -14,9 +14,19 @@ public class Logic {
         for (int index = 0; index < playerCount; index++) {
             hands.add(new ArrayList());
             for (int count = 0; count < 7; count++) {
-                int randomNumber = (int)(Math.random( ) * (9 - 1) + 1);
-                String randomColor = colors[(int)(Math.random( ) * colors.length)];
-                hands.get(index).add(randomColor + randomNumber);
+                int typeChance = (int)(Math.random( ) * (101 - 1) + 1);
+                if (typeChance >= 40) { // 60% chance of normal color + number card
+                    int randomNumber = (int)(Math.random( ) * (9 - 1) + 1);
+                    String randomColor = colors[(int)(Math.random( ) * colors.length)];
+                    hands.get(index).add(randomColor + randomNumber);
+                }
+                else if (typeChance >= 0) { // 40% chance of +2 or +4
+                    int randomNumber = (int)(Math.random( ) * (3 - 1) + 1);
+                    String randomColor = colors[(int)(Math.random( ) * colors.length)];
+                    String drawType = "T"; // "T" for draw Two
+                    if (randomNumber == 2) { drawType = "F"; } // "F" for draw Four
+                    hands.get(index).add(randomColor + drawType);
+                }
             }
         }
     }
@@ -44,6 +54,15 @@ public class Logic {
             turn += 1;
             if (turn >= hands.size()) {
                 turn = 0;
+            }
+
+            int draws = 0;
+            if (card.charAt(1) == 'Q') { draws = 2; }
+            else if (card.charAt(1) == 'F') { draws = 4; }
+            for (int count = 0; count < draws; count++) {
+                int randomNumber = (int)(Math.random( ) * (9 - 1) + 1);
+                String randomColor = colors[(int)(Math.random( ) * colors.length)];
+                hands.get(turn).add(randomColor + randomNumber);
             }
         }
         else {
