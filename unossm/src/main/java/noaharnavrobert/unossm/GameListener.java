@@ -7,20 +7,15 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class GameListener extends Thread {
-    String serverIP;
     Socket socket;
     DataInputStream dis;
-    DataOutputStream dos;
+    GameController controller;
 
-    public GameListener(String server) {
-        serverIP = server;
+    public GameListener(Socket socket, GameController controller) {
         try {
-            socket = new Socket(serverIP, 1234);
-            System.err.println("Connected to " + serverIP);
-            System.out.println(socket.isClosed());
-
+            this.socket = socket;
             dis = new DataInputStream(socket.getInputStream());
-            dos = new DataOutputStream(socket.getOutputStream());
+            this.controller = controller;
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -28,64 +23,19 @@ public class GameListener extends Thread {
     }
 
     public void run() {
+        boolean reading = true;
+        while (reading) {
+            try {
+                String res = dis.readUTF();
+                String handData = res.substring(1, res.length() - 4);
+                String current = res.substring(res.length() - 2);
+                ArrayList<String> hand = new ArrayList<String>(Arrays.asList(handData.split(", ")));
+                controller.RenderHand(hand, current);
 
-
-    }
-
-    public ArrayList<String> GetHand(String ip) {
-        ArrayList<String> hand = new ArrayList<String>();
-
-        try {
-            dos.writeUTF("getHand " + ip);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            String res = dis.readUTF();
-            res = res.substring(1, res.length() - 1);
-            hand = new ArrayList<String>(Arrays.asList(res.split(", ")));
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return hand;
-    }
-
-    public String GetCurrent(String ip) {
-        String card = "";
-        try {
-            System.out.println("Requesting current card");
-            dos.writeUTF("getCurrent " + ip);
-            System.out.println("Received current card");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            card = dis.readUTF();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return card;
-    }
-
-    public void PlayCard(String ip, int index) {
-        try {
-            dos.writeUTF("playCard " + ip + " " + index);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            } catch (IOException e) {
+                reading = false;
+                throw new RuntimeException(e);
+            }
         }
     }
-
-    public void DrawCard(String ip) {
-        try {
-            dos.writeUTF("drawCard "+ip);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
