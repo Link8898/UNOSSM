@@ -95,7 +95,7 @@ public class LoadingController {
                 LSController controller = lobbyserver.getController();
 
                 controller.startupPing(name, controller);
-                stage.setScene(new Scene(root));
+                stage.setScene(new Scene(root, 1000, 750));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -120,7 +120,7 @@ public class LoadingController {
                 LCController controller = lobbyclient.getController();
 
                 controller.startupPing(name, controller, host);
-                stage.setScene(new Scene(root));
+                stage.setScene(new Scene(root, 1000, 750));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
