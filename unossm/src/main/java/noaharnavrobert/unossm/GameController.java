@@ -77,7 +77,7 @@ public class GameController {
             container.getChildren().add(card);
         }
         // Render the most recently played card
-        if (currentCard.equals("NONE")) {
+        if (currentCard.equals("NE")) {
             String style = "-fx-background-color: " + "gray" + "; -fx-text-fill: black; -fx-font-size: 200%;";
             playedcard.setText("");
             playedcard.setStyle(style);
