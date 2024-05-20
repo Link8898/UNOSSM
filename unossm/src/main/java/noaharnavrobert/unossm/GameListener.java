@@ -16,16 +16,11 @@ public class GameListener extends Thread {
         serverIP = server;
         try {
             socket = new Socket(serverIP, 1234);
-<<<<<<< HEAD
             System.err.println("Connected to " + serverIP);
             System.out.println(socket.isClosed());
 
-             dis = new DataInputStream(socket.getInputStream());
-             dos = new DataOutputStream(socket.getOutputStream());
-=======
             dis = new DataInputStream(socket.getInputStream());
             dos = new DataOutputStream(socket.getOutputStream());
->>>>>>> eb9ce31806f0441f6de505cb7d0babd6b6c8c8f5
         }
         catch (IOException e) {
             throw new RuntimeException(e);
