@@ -57,7 +57,7 @@ public class Logic {
             }
 
             int draws = 0;
-            if (card.charAt(1) == 'Q') { draws = 2; }
+            if (card.charAt(1) == 'T') { draws = 2; }
             else if (card.charAt(1) == 'F') { draws = 4; }
             for (int count = 0; count < draws; count++) {
                 int randomNumber = (int)(Math.random( ) * (9 - 1) + 1);

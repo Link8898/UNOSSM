@@ -93,6 +93,8 @@ public class GameController {
             else if (currentCard.charAt(0) == 'y') { color = "yellow"; }
             String style = "-fx-background-color: " + color + "; -fx-text-fill: black; -fx-font-size: 300%;";
             playedcard.setText(currentCard.substring(1));
+            if (currentCard.charAt(1) == ('T')) { playedcard.setText("+2"); }
+            else if (currentCard.charAt(1) == ('F')) { playedcard.setText("+4"); }
             playedcard.setStyle(style);
         }
     }
