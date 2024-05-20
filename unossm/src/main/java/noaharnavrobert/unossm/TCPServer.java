@@ -14,13 +14,15 @@ public class TCPServer {
     private Logic logic;
     private ArrayList<String> players;
     private ArrayList<String> playerips;
-    private ArrayList<DataOutputStream> sockets;
+    private ArrayList<Socket> sockets;
+    private HashMap socketid;
 
     public TCPServer(Logic logic, ArrayList<String> players, ArrayList<String> playerips){
         this.logic = logic;
         this.players = players;
         this.playerips = playerips;
         sockets = new ArrayList<>();
+        socketid = new HashMap<Socket, Integer>();
 
     }
 
@@ -41,7 +43,11 @@ public class TCPServer {
                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
                 // create a new thread object
-                sockets.add(dos);
+                int id = playerips.indexOf(socket.getInetAddress().getHostName());
+                System.err.println(id);
+                socketid.put(socket, id);
+                sockets.add(socket);
+
                 Thread t = new ClientHandler(socket, dis, dos, logic, players, playerips);
                 // Invoking the start() method
                 t.start();
@@ -104,9 +110,14 @@ public class TCPServer {
                             int cardIndex = Integer.parseInt(receivedArray[2]);
                             logic.PlayCard(id, cardIndex);
 
+                        case "drawCard":
+                            logic.DrawCard(id);
+
                             lock.lock();
-                            for(DataOutputStream socket : sockets) {
-                                socket.writeUTF(toreturn);
+                            for(Socket socket : sockets) {
+                                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                                toreturn = logic.GetHand((Integer) socketid.get(socket)) + " " + logic.CurrentCard();
+                                dos.writeUTF(toreturn);
                             }
                             lock.unlock();
 
