@@ -129,6 +129,16 @@ public class TCPServer {
                             break;
 
                     }
+                    lock.lock();
+                    if(!(winner.isEmpty())) {
+                        for(Socket socket : sockets) {
+                                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                                toreturn = players.get(logic.getTurn()) + " wins! " + logic.GetHand((Integer) socketid.get(socket)) + " " + logic.CurrentCard();
+                                dos.writeUTF(toreturn);
+                            }
+                    }
+                    lock.unlock();
+                    running = false;
 
                 } catch (IOException e) {
                     e.printStackTrace();
