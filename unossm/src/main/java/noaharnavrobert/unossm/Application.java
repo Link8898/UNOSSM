@@ -14,7 +14,7 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
 
         FXMLLoader introloader = new FXMLLoader(Application.class.getResource("loadingscreen.fxml"));
-        Scene scene = new Scene(introloader.load(), 500, 500);
+        Scene scene = new Scene(introloader.load(), 1000, 750);
         stage.setTitle("UNOSSM");
         stage.setScene(scene);
         stage.show();
