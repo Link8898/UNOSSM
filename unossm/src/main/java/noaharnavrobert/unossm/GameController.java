@@ -37,7 +37,7 @@ public class GameController {
     private DataOutputStream dos;
     private Media sound;
 
-    protected void RenderHand(ArrayList<String> cardData, String currentCard) {
+    private void Render(ArrayList<String> cardData, String currentCard) {
         container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
         cards = new ArrayList<Button>();
         for (int index = 0; index < cardData.size(); index++) {
@@ -91,6 +91,17 @@ public class GameController {
             playedcard.setText(currentCard.substring(1));
             playedcard.setStyle(style);
         }
+    }
+
+    protected void RenderLater(ArrayList<String> cardData, String currentCard) {
+        Runnable task = () -> {
+            Platform.runLater(() -> {
+                Render(cardData, currentCard);
+            });
+        };
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @FXML

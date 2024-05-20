@@ -30,7 +30,7 @@ public class GameListener extends Thread {
                 String handData = res.substring(1, res.length() - 4);
                 String current = res.substring(res.length() - 2);
                 ArrayList<String> hand = new ArrayList<String>(Arrays.asList(handData.split(", ")));
-                controller.RenderHand(hand, current);
+                controller.RenderLater(hand, current);
 
             } catch (IOException e) {
                 reading = false;
