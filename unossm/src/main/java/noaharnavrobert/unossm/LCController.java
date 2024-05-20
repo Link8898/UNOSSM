@@ -55,7 +55,6 @@ public class LCController {
                 InetAddress address = InetAddress.getByName(host);
 
                 String msg = "join " + name + " " + ipaddress;
-                System.out.println(msg);
 
                 byte[] buf = msg.getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
@@ -109,7 +108,6 @@ public class LCController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Game should have started");
 
     }
 
