@@ -38,9 +38,6 @@ public class LSController {
     private String name;
 
 
-
-
-
     public void initialize(){
         getLocalIP();
     }
@@ -117,7 +114,7 @@ public class LSController {
 
         try {
             FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
-            Scene scene = new Scene(game.load(), 500, 500);
+            Scene scene = new Scene(game.load(), 1000, 500);
             Stage stage = (Stage)(ip.getScene().getWindow());
             stage.setScene(scene);
             stage.show();
