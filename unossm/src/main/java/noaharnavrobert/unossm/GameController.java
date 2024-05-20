@@ -39,9 +39,9 @@ public class GameController {
     private void RenderHand() {
         container.getChildren().removeIf(Button.class::isInstance); // Clear the previous hand
         cards = new ArrayList<Button>();
-        System.err.println("Requesting from server");
+        System.out.println("Requesting hand from server");
         ArrayList<String> cardData = listener.GetHand(ip); // FETCHING DATA
-
+        System.out.println("Received hand from server");
         for (int index = 0; index < cardData.size(); index++) {
             // Create and style the card
             Button card = new Button();
@@ -75,7 +75,7 @@ public class GameController {
             container.getChildren().add(card);
         }
         // Render the most recently played card
-        String currentCard = listener.GetCurrent();
+        String currentCard = listener.GetCurrent(ip);
         if (currentCard.equals("NONE")) {
             String style = "-fx-background-color: " + "gray" + "; -fx-text-fill: black; -fx-font-size: 200%;";
             playedcard.setText("");
