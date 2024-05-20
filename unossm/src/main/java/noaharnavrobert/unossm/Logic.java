@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Logic {
     private ArrayList<ArrayList<String>> hands; // The hands of each player
     private static final String[] colors = {"r", "g", "b", "y"};
-    private String currentCard = "NONE"; // Top facing card
+    private String currentCard = "NE"; // Top facing card
     private int turn = 0; // Which player's turn
     public Logic(int playerCount) {
         hands = new ArrayList<>(playerCount);
@@ -38,7 +38,7 @@ public class Logic {
 
     public void PlayCard(int id, int cardIndex) { // Place a card via the id's hand and card index
         String card = hands.get(id).get(cardIndex);
-        if (id == turn && (card.charAt(0) == currentCard.charAt(0) || card.charAt(1) == currentCard.charAt(1) || currentCard.equals("NONE"))) {
+        if (id == turn && (card.charAt(0) == currentCard.charAt(0) || card.charAt(1) == currentCard.charAt(1) || currentCard.equals("NE"))) {
             currentCard = card;
             hands.get(id).remove(cardIndex);
             turn += 1;

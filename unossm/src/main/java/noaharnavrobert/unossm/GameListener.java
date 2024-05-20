@@ -27,6 +27,7 @@ public class GameListener extends Thread {
         while (reading) {
             try {
                 String res = dis.readUTF();
+                System.out.println(res);
                 String handData = res.substring(1, res.length() - 4);
                 String current = res.substring(res.length() - 2);
                 ArrayList<String> hand = new ArrayList<String>(Arrays.asList(handData.split(", ")));
