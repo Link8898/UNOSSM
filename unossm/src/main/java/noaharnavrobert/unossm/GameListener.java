@@ -29,7 +29,7 @@ public class GameListener extends Thread {
                 String res = dis.readUTF();
                 System.out.println(res);
                 String nameData = res.substring(0, res.indexOf("[") - 1);
-                String handData = res.substring(res.indexOf("["), res.length() - 4);
+                String handData = res.substring(res.indexOf("[") + 1, res.length() - 4);
                 String current = res.substring(res.length() - 2);
                 ArrayList<String> hand = new ArrayList<String>(Arrays.asList(handData.split(", ")));
                 controller.RenderLater(nameData, hand, current);
