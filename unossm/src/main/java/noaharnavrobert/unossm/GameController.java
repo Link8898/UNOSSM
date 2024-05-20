@@ -62,7 +62,7 @@ public class GameController {
             EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    //logic.PlayCard(id, cards.indexOf(card));
+                    listener.PlayCard(ip, cards.indexOf(card));
                     RenderHand();
                 }
             };

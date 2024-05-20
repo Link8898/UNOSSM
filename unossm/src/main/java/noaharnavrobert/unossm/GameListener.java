@@ -72,13 +72,20 @@ public class GameListener extends Thread {
         return card;
     }
 
+    public void PlayCard(String ip, int index) {
+        try {
+            dos.writeUTF("playCard " + ip + " " + index);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void DrawCard(String ip) {
         try {
             dos.writeUTF("drawCard "+ip);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 }
