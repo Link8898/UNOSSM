@@ -8,17 +8,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" prefHeight="750.0" prefWidth="1000.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noaharnavrobert.unossm.GameController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <Pane prefHeight="200.0" prefWidth="554.0">
+   <Pane prefHeight="506.0" prefWidth="960.0">
       <children>
-         <Button fx:id="draw" layoutX="243.0" layoutY="6.0" onAction="#onDrawButtonClick" text="Draw" />
-         <Button fx:id="quit" layoutX="670.0" layoutY="6.0" mnemonicParsing="false" text="Music" />
-         <Label id="current" fx:id="textboxcurrent" layoutX="445.0" layoutY="13.0" text="Current Card:" />
-         <Button fx:id="playedcard" layoutX="430.0" layoutY="45.0" minWidth="53.0" mnemonicParsing="false" prefHeight="149.0" prefWidth="111.0" text="Button" />
+         <Button fx:id="draw" layoutX="89.0" layoutY="121.0" onAction="#onDrawButtonClick" prefHeight="250.0" prefWidth="180.0" text="Draw" />
+         <Label id="current" fx:id="textboxcurrent" layoutX="412.0" layoutY="21.0" text="Current Card:">
+            <font>
+               <Font size="30.0" />
+            </font></Label>
+         <Button fx:id="playedcard" layoutX="381.0" layoutY="111.0" minWidth="53.0" mnemonicParsing="false" prefHeight="300.0" prefWidth="230.0" text="Button" />
+         <Label layoutX="713.0" layoutY="105.0" prefHeight="30.0" prefWidth="150.0" text="Current Turn:">
+            <font>
+               <Font size="25.0" />
+            </font>
+         </Label>
+         <Label fx:id="currentTurn" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="142.0" prefHeight="30.0" prefWidth="297.0" textAlignment="CENTER" wrapText="true">
+            <font>
+               <Font size="25.0" />
+            </font>
+         </Label>
       </children>
    </Pane>
     <AnchorPane fx:id="container" prefHeight="179.0" prefWidth="482.0" style="-fx-background-color: darkgreen;">
