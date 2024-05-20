@@ -92,7 +92,7 @@ public class LCController {
     protected void startGame(){
         try {
             FXMLLoader game = new FXMLLoader(Application.class.getResource("view.fxml"));
-            Scene scene = new Scene(game.load(), 1000, 500);
+            Scene scene = new Scene(game.load(), 1000, 750);
             Runnable task = () -> {
                 Platform.runLater(() -> {
                     Stage stage = (Stage)(ip.getScene().getWindow());
